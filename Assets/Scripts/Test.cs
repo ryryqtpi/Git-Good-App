@@ -1,17 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
+using UnityEngine.Networking;
 
-public class Test : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+class Test: MonoBehaviour {
+	void Start() {
+		StartCoroutine(GetText());
+		Debug.Log ("Starting HTTP Request");
 	}
 
+	IEnumerator GetText() {
+		UnityWebRequest www = UnityWebRequest.Get("https://api.github.com/users/cashc");
+		yield return www.Send();
+
+		if (www.isError) {
+			Debug.Log (www.error);
+		} else {
+			Debug.Log(www.downloadHandler.text);
+		}
+	}
 }
