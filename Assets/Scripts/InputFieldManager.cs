@@ -5,8 +5,10 @@ using UnityEngine.UI;
 
 public class InputFieldManager : MonoBehaviour {
 
+	public Canvas mainCanvas;
 	public Text consoleTextBox;
 	public InputField commandLine;
+	public ScrollRect scrollRect;
 
 	// Use this for initialization
 	void Start () {
@@ -23,9 +25,21 @@ public class InputFieldManager : MonoBehaviour {
 		if (Input.GetButtonDown ("Submit")) {
 			print ("SendToConsole: " + commandLine.text);
 			string currText = consoleTextBox.text;
-			consoleTextBox.text = currText + "\n" + commandLine.text;
+			string commandText = commandLine.text.Trim();
+			if (commandText != "") {
+				if (consoleTextBox.text != "") {
+					consoleTextBox.text = currText + "\n" + commandText;
+				} else {
+					consoleTextBox.text = commandText;
+				}
+			}
 			commandLine.text = "";
+			ForceUpdateConsole();
 		}
 
+	}
+
+	public void ForceUpdateConsole() {
+		scrollRect.verticalScrollbar.value=0f;
 	}
 }
