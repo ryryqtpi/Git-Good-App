@@ -9,6 +9,7 @@ public class InputFieldManager : MonoBehaviour {
 	public Text consoleTextBox;
 	public InputField commandLine;
 	public ScrollRect scrollRect;
+	public int lineCount = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -28,12 +29,13 @@ public class InputFieldManager : MonoBehaviour {
 			string commandText = commandLine.text.Trim();
 			if (commandText != "") {
 				if (consoleTextBox.text != "") {
-					consoleTextBox.text = currText + "\n" + commandText;
+					consoleTextBox.text = currText + "\n[" + lineCount + "]: " + commandText;
 				} else {
-					consoleTextBox.text = commandText;
+					consoleTextBox.text = "[" + lineCount + "]: " + commandText;
 				}
 			}
 			commandLine.text = "";
+			lineCount++;
 			ForceUpdateConsole();
 		}
 
