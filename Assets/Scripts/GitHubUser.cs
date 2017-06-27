@@ -39,9 +39,7 @@ public class GitHubUser
     public string collaborators;
     public string two_factor_authentication;
     public string plan;
-    public string name;
     public string space;
-    public string collaborators;
     public string private_repos;
 
     public GitHubUser()

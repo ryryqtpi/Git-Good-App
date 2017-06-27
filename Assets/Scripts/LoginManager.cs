@@ -3,10 +3,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 
-public class LoginManager : MonoBehaviour {
-
-    //public string token = "7047406dd90878ac3e665dcc6b7e4771c4809473";
-    //public string username = "tammiet";
+public class LoginManager : MonoBehaviour
+{
     public string username = "";
 	public string token = "";
 	public string avatar_url;
