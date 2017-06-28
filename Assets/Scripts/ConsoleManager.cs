@@ -16,13 +16,15 @@ public class ConsoleManager : MonoBehaviour {
 	public bool exerciseInProgress = false;
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+	{
 		cli = gameObject.GetComponent<CommandLineInterpreter> ();
 		commandLine.text = "";
 	}
-	
+
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+	{
 		commandLine.ActivateInputField();
 	}
 
@@ -37,14 +39,14 @@ public class ConsoleManager : MonoBehaviour {
 	}
 
 	// Sends a string to the console
-	public void SendToConsole() 
+	public void SendToConsole()
 	{
-		if (UserPressedEnter()) 
+		if (UserPressedEnter())
 		{
 			// Trim command before sending it
 			string trimmed_command = commandLine.text.Trim ();
 
-			if (trimmed_command == "") 
+			if (trimmed_command == "")
 			{
 				return;
 			}
@@ -59,7 +61,7 @@ public class ConsoleManager : MonoBehaviour {
 		}
 	}
 
-	public void ForceUpdateConsoleUI() 
+	public void ForceUpdateConsoleUI()
 	{
 		scrollRect.verticalScrollbar.value=0f;
 	}

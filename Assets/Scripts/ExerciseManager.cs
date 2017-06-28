@@ -7,13 +7,15 @@ public class ExerciseManager : MonoBehaviour {
 	public GameObject exercisePrefab;
 
 	// Use this for initialization
-	void Start () {
-		
+	void Start ()
+	{
+
 	}
-	
+
 	// Update is called once per frame
-	void Update () {
-		
+	void Update ()
+	{
+
 	}
 
 	public void StartExercise(string exercise_name)
@@ -35,7 +37,5 @@ public class ExerciseManager : MonoBehaviour {
 		exercise.name = "Exercise #1";
 		exercise.discription = "A breief tutorial on how to use the <b>[cd]</b> and <b>[ls]</b> commands in the terminal.";
 		exercise.skills = "<b>[cd]</b> and <b>[ls]</b>";
-
-
 	}
 }
