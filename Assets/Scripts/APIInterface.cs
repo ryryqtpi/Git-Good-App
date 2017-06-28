@@ -6,12 +6,6 @@ using System.Text.RegularExpressions;
 
 public class APIInterface : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-
-		
-	}
-
     public void GetExercises()
     {
         string exercise_url_attribute = "https://super-confusing-baby.herokuapp.com/exercises/1.json";
@@ -20,8 +14,8 @@ public class APIInterface : MonoBehaviour {
         string steps_url_attribute = "https://super-confusing-baby.herokuapp.com/exercises/1/steps.json";
         StartCoroutine(GetJSON_Steps(steps_url_attribute));
 
-        //string commands_url_attribute = "https://super-confusing-baby.herokuapp.com/exercises/1/steps/1/commands.json";
-        //StartCoroutine(GetJSON_Steps(commands_url_attribute));
+        string commands_url_attribute = "https://super-confusing-baby.herokuapp.com/exercises/1/steps/1/commands.json";
+        StartCoroutine(GetJSON_Commands(commands_url_attribute));
     }
     
 
@@ -37,16 +31,8 @@ public class APIInterface : MonoBehaviour {
         }
         else
         {
-            Debug.Log(www.downloadHandler.text);
+            //Debug.Log(www.downloadHandler.text);
             ExerciseAPI exercise = JsonUtility.FromJson<ExerciseAPI>(www.downloadHandler.text);
-
-            //Player[] player = JsonHelper.FromJson<Player>(jsonString);
-            //ExerciseAPI e = JsonHelper.FromJson<ExerciseAPI>(www.downloadHandler.text);
-
-            Debug.Log("Exercise: " + exercise.name);
-            Debug.Log("Description: " + exercise.description);
-            Debug.Log("Difficulty: " + exercise.difficulty);
-
         }
     }
     IEnumerator GetJSON_Steps(string url)
@@ -61,19 +47,15 @@ public class APIInterface : MonoBehaviour {
         }
         else
         {
-            Debug.Log(www.downloadHandler.text);
-            string step_object = Regex.Match(www.downloadHandler.text, @"\[(.*?)\]").Groups[1].Value;
-            var regex = new Regex("{.*?}");
-            var matches = regex.Matches(step_object);
-            int number = 2;
-            StepAPI[] stepArray = new StepAPI[2];
-            for (int i = 0; i < number; i++)
+            //Debug.Log(www.downloadHandler.text);
+            MatchCollection matches = JsonParser.FromJson(www.downloadHandler.text); //converts JSON arrays to a MatchCollection object
+            var step_list = new List<StepAPI>();
+            foreach (var item in matches) //Converts MatchesCollection object to a list of StepAPI objects
             {
-
-                stepArray[i] = JsonUtility.FromJson<StepAPI>(matches[i].ToString());
-                Debug.Log(stepArray[i].correct_response);
+                var step_class = new StepAPI();
+                step_class = JsonUtility.FromJson < StepAPI > (item.ToString());
+                step_list.Add(step_class);
             }
-
         }
     }
     IEnumerator GetJSON_Commands(string url)
@@ -84,21 +66,19 @@ public class APIInterface : MonoBehaviour {
 
         if (www.isError)
         {
-            Debug.Log(www.error);
+            Debug.Log("error" + www.error);
         }
         else
         {
-            Debug.Log(www.downloadHandler.text);
-            //CommandAPI Command = JsonUtility.FromJson<CommandAPI>(www.downloadHandler.text);
-            CommandAPI[] Command = JsonHelper.FromJson<CommandAPI>(www.downloadHandler.text);
-            Debug.Log("CommandID: " + Command[0].id);
-            Debug.Log("Command name: " + Command[0].name);
-            Debug.Log("Command url: " + Command[0].url);
-
+            //Debug.Log(www.downloadHandler.text);
+            MatchCollection matches = JsonParser.FromJson(www.downloadHandler.text); //converts JSON arrays to a MatchCollection 
+            var command_list = new List<CommandAPI>();
+            foreach (var item in matches) //Converts MatchesCollection object to a list of CommandAPI objects
+            {
+                var command_class = new CommandAPI();
+                command_class = JsonUtility.FromJson<CommandAPI>(item.ToString());
+                command_list.Add(command_class);
+            }
         }
     }
-    // Update is called once per frame
-    void Update () {
-		
-	}
 }

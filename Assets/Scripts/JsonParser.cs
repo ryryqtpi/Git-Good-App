@@ -1,16 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class JsonParser : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+using UnityEngine.Networking;
+using System.Text.RegularExpressions;
+/* Parses arrays of JSON objects and returns a MatchesCollection object
+ * 
+ * */
+public class JsonParser {
+    public static MatchCollection FromJson(string json)
+    {
+        string step_object = Regex.Match(json, @"\[(.*?)\]").Groups[1].Value;
+        var regex = new Regex("{.*?}");
+        var matches = regex.Matches(step_object);
+        return (matches);
+    }
 }

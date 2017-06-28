@@ -9,7 +9,6 @@ public class ExerciseAPI
     public string name;
     public string description;
     public int difficulty;
-    //public string steps;
 
     public ExerciseAPI()
     {
