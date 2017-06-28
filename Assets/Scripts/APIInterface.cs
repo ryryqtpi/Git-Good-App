@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using System.Text.RegularExpressions;
 
 public class APIInterface : MonoBehaviour {
 
@@ -19,8 +20,8 @@ public class APIInterface : MonoBehaviour {
         string steps_url_attribute = "https://super-confusing-baby.herokuapp.com/exercises/1/steps.json";
         StartCoroutine(GetJSON_Steps(steps_url_attribute));
 
-        string commands_url_attribute = "https://super-confusing-baby.herokuapp.com/exercises/1/steps/1/commands.json";
-        StartCoroutine(GetJSON_Steps(commands_url_attribute));
+        //string commands_url_attribute = "https://super-confusing-baby.herokuapp.com/exercises/1/steps/1/commands.json";
+        //StartCoroutine(GetJSON_Steps(commands_url_attribute));
     }
     
 
@@ -61,16 +62,18 @@ public class APIInterface : MonoBehaviour {
         else
         {
             Debug.Log(www.downloadHandler.text);
-            //StepAPI Step = JsonUtility.FromJson<StepAPI>(www.downloadHandler.text);
-            StepAPI[] step = JsonHelper.FromJson<StepAPI>(www.downloadHandler.text);
+            string step_object = Regex.Match(www.downloadHandler.text, @"\[(.*?)\]").Groups[1].Value;
+            var regex = new Regex("{.*?}");
+            var matches = regex.Matches(step_object);
+            int number = 2;
+            StepAPI[] stepArray = new StepAPI[2];
+            for (int i = 0; i < number; i++)
+            {
 
+                stepArray[i] = JsonUtility.FromJson<StepAPI>(matches[i].ToString());
+                Debug.Log(stepArray[i].correct_response);
+            }
 
-            //Debug.Log("StepID: " + step[0].id);
-            //Debug.Log("Instruction: " + step[0].instruction);
-            //Debug.Log("response: " + step[0].correct_response);
-            //Debug.Log("StepID: " + Step.id);
-            //Debug.Log("Instruction: " + Step.instruction);
-            //Debug.Log("response: " + Step.correct_response);
         }
     }
     IEnumerator GetJSON_Commands(string url)
