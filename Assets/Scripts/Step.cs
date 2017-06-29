@@ -9,7 +9,7 @@ public class Step : MonoBehaviour {
 	public string correct_response;
 	public string error_response;
 
-	public Step (string answer, string instruction, string correct_response, string error_response)
+	public void populate (string answer, string instruction, string correct_response, string error_response)
 	{
 		this.answer = answer;
 		this.instruction = instruction;

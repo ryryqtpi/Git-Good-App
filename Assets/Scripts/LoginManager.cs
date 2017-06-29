@@ -8,8 +8,6 @@ public class LoginManager : MonoBehaviour
 {
     public string username = "";
 	public string token = "";
-	public string avatar_url;
-	public string total_private_repos;
 
 	public InputField commandLine;
 
@@ -122,7 +120,8 @@ public class LoginManager : MonoBehaviour
 
             } else
             {
-				user.avatar_url = json["avatar_url"];
+				user.populate (json);
+
 				var www_image = new WWW(user.avatar_url);
                 yield return www_image; // waits until image is downloaded
 
@@ -136,7 +135,6 @@ public class LoginManager : MonoBehaviour
 				//profilePicture.GetComponent<RawImage> ().SetNativeSize ();
 				//ResizeImage();
 
-				//user has been authenticated
 				authenticated = true;
             }
 		}

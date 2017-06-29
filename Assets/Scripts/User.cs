@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SimpleJSON;
 
 public class User : MonoBehaviour {
 
@@ -26,9 +27,28 @@ public class User : MonoBehaviour {
 	public string collaborators;
 	public string two_factor_authentication;
 
-	public User()
-	{
-		
+	public void populate(JSONNode json){
+		this.login = json["login"];
+		this.id = json["id"];
+		this.avatar_url = json["avatar_url"];
+		this.html_url = json["html_url"];
+		this.name = json["name"];
+		this.company = json["company"];
+		this.blog = json["blog"];
+		this.location = json["location"];
+		this.email = json["email"];
+		this.hireable = json["hireable"];
+		this.bio = json["bio"];
+		this.public_repos = json["public_repos"];
+		this.public_gists = json["public_gists"];
+		this.followers = json["followers"];
+		this.following = json["following"];
+		this.created_at = json["created_at"];
+		this.updated_at= json["updated_at"];
+		this.total_private_repos = json["total_private_repos"];
+		this.owned_private_repos = json["owned_private_repos"];
+		this.collaborators = json["collaborators"];
+		this.two_factor_authentication = json["two_factor_authentication"];
 	}
 
 	// Use this for initialization
@@ -40,4 +60,5 @@ public class User : MonoBehaviour {
 	void Update () {
 		
 	}
+
 }
