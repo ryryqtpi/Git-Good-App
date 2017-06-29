@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using SimpleJSON;
 
-public class Step : MonoBehaviour {
+public class Step {
 
 	public string answer;
 	public string instruction;

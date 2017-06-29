@@ -4,9 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using SimpleJSON;
 
-public class Exercise : MonoBehaviour
+public class Exercise
 {
-	
 	public string exercise_name;
 	public string discription;
 	public string difficulty_level;
@@ -16,7 +15,7 @@ public class Exercise : MonoBehaviour
 	public void populate(JSONNode exerciseJSON){
 		this.exercise_name = exerciseJSON["name"];
 		this.discription = exerciseJSON["description"];
-		this.difficulty_level = exerciseJSON["difficulty_level"];
+		this.difficulty_level = exerciseJSON["difficulty"];
 
 		int count = exerciseJSON ["steps"].Count;
 		this.steps = new Step [count];

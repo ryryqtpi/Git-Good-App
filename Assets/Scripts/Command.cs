@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using SimpleJSON;
 
-public class Command : MonoBehaviour {
+public class Command {
 
 	public string command_name;
 //	public string argument;

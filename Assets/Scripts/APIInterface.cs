@@ -44,7 +44,9 @@ public class APIInterface : MonoBehaviour {
 				exercise.populate (json [e]);
 				exercises[e] = exercise;
 			}
-				
+
+			Debug.Log ("Exercise "+exercises [0].exercise_name+" Steps count: "+exercises [0].steps.Length);
+
         }
 
     }
