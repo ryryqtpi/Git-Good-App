@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
-
+using SimpleJSON;
 
 public class LoginManager : MonoBehaviour
 {
@@ -24,13 +24,13 @@ public class LoginManager : MonoBehaviour
 
 	private bool flag = false;
 
-	public GitHubUser user;
+	public User user;
 
 	// Use this for initialization
 	void Start () 
 	{
 		string message = "Welcome to Git-Good! Please sign in to your GitHub account to continue.\n\nUsername: ";
-//		cm.PrintToConsole (message);
+		cm.PrintToConsole (message);
 	}
 
 	void Update ()
@@ -97,7 +97,7 @@ public class LoginManager : MonoBehaviour
 	IEnumerator GetJSON(string url)
 	{
 		GameObject go = Instantiate (gitHubUserPrefab);
-		GitHubUser user = go.AddComponent<GitHubUser>();
+		User user = go.AddComponent<User>();
 
 		cm.PrintToConsole ("\nAccessing account information...");
 
@@ -112,19 +112,18 @@ public class LoginManager : MonoBehaviour
 		}
 		else
 		{
-			//logs json from Github
-			Debug.Log(www.downloadHandler.text);
-			JsonUtility.FromJsonOverwrite(www.downloadHandler.text, user);
-            if (!www.downloadHandler.text.Contains("total_private_repos"))
+			Debug.Log (www.downloadHandler.text);
+			var json = JSON.Parse (www.downloadHandler.text);
+
+			if (json["total_private_repos"].IsNull)
             {
                 Debug.Log("Invalid Access Token for user " + this.username);
 				cm.PrintToConsole ("\nAccess token could not be verified. Please try again.");
+
             } else
             {
-				
-                //gets avatar_url and grabs image from web
-                string image_url = (user.avatar_url);
-                var www_image = new WWW(image_url);
+				user.avatar_url = json["avatar_url"];
+				var www_image = new WWW(user.avatar_url);
                 yield return www_image; // waits until image is downloaded
 
                 //display image as a UI texture

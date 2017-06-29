@@ -33,13 +33,13 @@ public class APIInterface : MonoBehaviour {
         }
         else
         {
+			List<Exercise> exercises;;
 			var json = JSON.Parse (www.downloadHandler.text);
 
 			//Exercises
 			for (int e=0; e<json.Count; e++) {
 				var exercise = json[e];
-
-				Debug.Log (exercise["name"]);
+				Exercise exerciseObject = new Exercise (exercise["name"], exercise["description"], exercise["difficulty"]);
 
 				//Steps
 				for(int s=0; s<exercise["steps"].Count; s++){

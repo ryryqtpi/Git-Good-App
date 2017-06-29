@@ -30,6 +30,7 @@ public class ExerciseManager : MonoBehaviour {
 
 	public void GenerateSampleExercise()
 	{
+		/*
 		GameObject go = Instantiate (exercisePrefab, transform);
 		Exercise exercise = go.GetComponent<Exercise> ();
 
@@ -37,5 +38,6 @@ public class ExerciseManager : MonoBehaviour {
 		exercise.name = "Exercise #1";
 		exercise.discription = "A breief tutorial on how to use the <b>[cd]</b> and <b>[ls]</b> commands in the terminal.";
 		exercise.skills = "<b>[cd]</b> and <b>[ls]</b>";
+		*/
 	}
 }

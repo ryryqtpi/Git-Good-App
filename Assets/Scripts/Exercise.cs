@@ -5,39 +5,29 @@ using UnityEngine.UI;
 
 public class Exercise : MonoBehaviour
 {
-
-	public string name;
+	
+	public string exercise_name;
 	public string discription;
-	public string skills;
+	public string difficulty_level;
+	public bool completed = false;
 
-	public List<string> steps;
+	public List<Step> steps;
 
-	public Text nameText;
-	public Text discriptionText;
-	public Text skillsText;
-
+	public Exercise(string name, string description, string difficulty_level){
+		this.exercise_name = name;
+		this.discription = description;
+		this.difficulty_level = difficulty_level;
+	}
 
 	// Use this for initialization
 	void Start ()
 	{
-		nameText.text = name;
-		discriptionText.text = discription;
-		skillsText.text = skills;
+		
 	}
 
 	// Update is called once per frame
 	void Update ()
 	{
 
-	}
-
-	public void AddStep(string step)
-	{
-		steps.Add (step);
-
-		/*foreach (string text in steps)
-		{
-			Debug.Log (text);
-		}*/
 	}
 }
