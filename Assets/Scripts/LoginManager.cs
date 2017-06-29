@@ -30,7 +30,7 @@ public class LoginManager : MonoBehaviour
 	void Start () 
 	{
 		string message = "Welcome to Git-Good! Please sign in to your GitHub account to continue.\n\nUsername: ";
-		cm.PrintToConsole (message);
+//		cm.PrintToConsole (message);
 	}
 
 	void Update ()
