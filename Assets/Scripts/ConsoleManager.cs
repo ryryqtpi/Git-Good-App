@@ -51,9 +51,9 @@ public class ConsoleManager : MonoBehaviour {
 				return;
 			}
 
-			Command command = new Command (commandLine.text.Trim ());
+			Entry entry = new Entry (commandLine.text.Trim ());
 
-			PrintToConsole (command.Output(displayTextBox.text, lineCount));
+			PrintToConsole (entry.Output(displayTextBox.text, lineCount));
 			cli.HandleCommand(trimmed_command);
 
 			// Update the UI after making changes

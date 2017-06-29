@@ -4,12 +4,14 @@ using UnityEngine;
 using SimpleJSON;
 
 public class User : MonoBehaviour {
-
-	public string login;
+	
 	public string id;
+	public string level;
+	public string login;
+	public string github_id;
 	public string avatar_url;
 	public string html_url;
-	public string name;
+	public string full_name;
 	public string company;
 	public string blog;
 	public string location;
@@ -27,12 +29,12 @@ public class User : MonoBehaviour {
 	public string collaborators;
 	public string two_factor_authentication;
 
-	public void populate(JSONNode json){
+	public void populateGitHub(JSONNode json){
 		this.login = json["login"];
-		this.id = json["id"];
+		this.github_id = json["id"];
 		this.avatar_url = json["avatar_url"];
 		this.html_url = json["html_url"];
-		this.name = json["name"];
+		this.full_name = json["name"];
 		this.company = json["company"];
 		this.blog = json["blog"];
 		this.location = json["location"];
@@ -50,6 +52,8 @@ public class User : MonoBehaviour {
 		this.collaborators = json["collaborators"];
 		this.two_factor_authentication = json["two_factor_authentication"];
 	}
+
+
 
 	// Use this for initialization
 	void Start () {

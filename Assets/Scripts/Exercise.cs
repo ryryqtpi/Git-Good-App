@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using SimpleJSON;
 
 public class Exercise : MonoBehaviour
 {
@@ -10,13 +11,24 @@ public class Exercise : MonoBehaviour
 	public string discription;
 	public string difficulty_level;
 	public bool completed = false;
+	public Step[] steps;
 
-	public List<Step> steps;
+	public void populate(JSONNode exerciseJSON){
+		this.exercise_name = exerciseJSON["name"];
+		this.discription = exerciseJSON["description"];
+		this.difficulty_level = exerciseJSON["difficulty_level"];
 
-	public Exercise(string name, string description, string difficulty_level){
-		this.exercise_name = name;
-		this.discription = description;
-		this.difficulty_level = difficulty_level;
+		int count = exerciseJSON ["steps"].Count;
+		this.steps = new Step [count];
+
+		for(int s=0; s<count; s++){
+			var stepJSON = exerciseJSON["steps"][s];
+//			GameObject go = new GameObject ();
+//			Step step = go.AddComponent<Step> ();
+			Step step = new Step();
+			step.populate (stepJSON);
+			steps[s] = step;
+		}
 	}
 
 	// Use this for initialization

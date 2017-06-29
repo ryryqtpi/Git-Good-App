@@ -120,7 +120,7 @@ public class LoginManager : MonoBehaviour
 
             } else
             {
-				user.populate (json);
+				user.populateGitHub(json);
 
 				var www_image = new WWW(user.avatar_url);
                 yield return www_image; // waits until image is downloaded

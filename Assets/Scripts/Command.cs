@@ -1,15 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SimpleJSON;
 
 public class Command : MonoBehaviour {
 
-	public string name;
-	public string argument;
+	public string command_name;
+//	public string argument;
 
-	public void populate (string name, string argument){
-		this.name = name;
-		this.argument = argument;
+	public void populate (JSONNode commandJSON){
+		this.command_name = commandJSON["name"];
+//		this.argument = commandJSON["argument"];
 	}
 
 	// Use this for initialization

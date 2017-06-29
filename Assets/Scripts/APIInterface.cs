@@ -33,34 +33,19 @@ public class APIInterface : MonoBehaviour {
         }
         else
         {
-			List<Exercise> exercises = new List<Exercise> ();
 			var json = JSON.Parse (www.downloadHandler.text);
 
-			//Exercises
-			for (int e=0; e<json.Count; e++) {
-				var exerciseJSON = json[e];
-				exercises.Add (
-					new Exercise().populate(
-						exerciseJSON["name"], exerciseJSON["description"], exerciseJSON["difficulty"]
-					)
-				);
+			int count = json.Count;
+			Exercise[] exercises = new Exercise[count];
 
-				//Steps
-				for(int s=0; s<exerciseJSON["steps"].Count; s++){
-					var stepJSON = exerciseJSON["steps"][s];
-
-					Debug.Log(step["instruction"]);
-
-					//Commands
-					for(int c=0; c<stepJSON["commands"].Count; c++){
-						var command = stepJSON["commands"][c];
-
-						Debug.Log(command["name"]);
-					}
-				}
-
+			for (int e=0; e<count; e++) {
+				GameObject go = new GameObject ();
+				Exercise exercise = go.AddComponent<Exercise> ();
+				exercise.populate (json [e]);
+				exercises[e] = exercise;
 			}
 				
         }
+
     }
 }
