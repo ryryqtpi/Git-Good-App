@@ -7,7 +7,9 @@ public class User : MonoBehaviour {
 	
 	public string id;
 	public string level;
-	public string login;
+	public string api_created_at;
+	public string api_updated_at;
+	public string username;
 	public string github_id;
 	public string avatar_url;
 	public string html_url;
@@ -30,7 +32,7 @@ public class User : MonoBehaviour {
 	public string two_factor_authentication;
 
 	public void populateGitHub(JSONNode json){
-		this.login = json["login"];
+		this.username = json["login"];
 		this.github_id = json["id"];
 		this.avatar_url = json["avatar_url"];
 		this.html_url = json["html_url"];
@@ -53,7 +55,27 @@ public class User : MonoBehaviour {
 		this.two_factor_authentication = json["two_factor_authentication"];
 	}
 
+	public void populateAPI(JSONNode json){
+		this.id = json ["id"];
+		this.level = json ["level"];
+		this.api_updated_at = json ["created_at"];
+		this.api_created_at = json ["updated_at"];
 
+	}
+
+	public override string ToString(){
+		string ret = "username: " + username;
+		ret += "\nid: " + id;
+		ret += "\nlevel: " + level;
+		return ret;
+	}
+
+	public string StringRepresentation(){
+		string ret = "username: " + username;
+		ret += "\nid: " + id;
+		ret += "\nlevel: " + level;
+		return ret;
+	}
 
 	// Use this for initialization
 	void Start () {

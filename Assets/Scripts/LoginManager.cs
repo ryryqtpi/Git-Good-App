@@ -42,6 +42,9 @@ public class LoginManager : MonoBehaviour
 				Debug.Log ("Token entered");
 				SubmitToken ();
 				break;
+			case 2:
+				cm.PrintToConsole (user.StringRepresentation());
+				break;
 			}
 		}
 	}
@@ -102,7 +105,7 @@ public class LoginManager : MonoBehaviour
 		else
 		{
 			GameObject go = Instantiate (gitHubUserPrefab);
-			User user = go.AddComponent<User>();
+			user = go.AddComponent<User>();
 
 			var json = JSON.Parse (www.downloadHandler.text);
 
@@ -130,8 +133,12 @@ public class LoginManager : MonoBehaviour
 				//profilePicture.GetComponent<RawImage> ().SetNativeSize ();
 				//ResizeImage();
 
-				cm.PrintToConsole("\nSuccess!");
+				cm.PrintToConsole("\nSuccess!\n");
 				state = 2;
+
+				GameObject api_go = new GameObject ("API");
+				APIInterface api = api_go.AddComponent<APIInterface> ();
+				api.GetUser (ref user);
 			}
 		}
 	}
