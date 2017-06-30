@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 using System.Text.RegularExpressions;
@@ -28,13 +29,12 @@ public class APIInterface : MonoBehaviour {
 
 	public void GetUser(ref User new_user){
 		user = new_user;
-		Debug.Log ("Checking our API for "+user.username);
-		string user_url = BASE_URL+"users.json?username="+user.username;
-		Debug.Log ("GET request to our slow ass Heroku app... Could take up to 10s.");
-		StartCoroutine(GetJSON_User(user_url));
+		Debug.Log ("Checking API for "+user.username+ " via GET request to our slow ass Heroku app... Could take up to 10s.");
+		StartCoroutine(GetJSON_User());
 	}
 
-	IEnumerator GetJSON_User(string url){
+	IEnumerator GetJSON_User(){
+		string url = BASE_URL + "users.json?username=" + user.username;
 		UnityWebRequest www = UnityWebRequest.Get(url);
 		yield return www.Send();
 		if (www.isError) {
@@ -43,7 +43,9 @@ public class APIInterface : MonoBehaviour {
 			var json = JSON.Parse (www.downloadHandler.text);
 			if (json ["Error"] != null) {
 				Debug.Log (json ["Error"]);
+				StartCoroutine (PostNewUser ());
 			} else {
+				Debug.Log ("Got user from API.");
 				user.populateAPI (json);
 			}
 		}
@@ -70,8 +72,25 @@ public class APIInterface : MonoBehaviour {
 				exercise.populate (json [e]);
 				exercises[e] = exercise;
 			}
-
         }
-
     }
+
+	IEnumerator PostNewUser(){
+		string url = BASE_URL + "users";
+		WWWForm form = new WWWForm();
+		form.AddField("commit", "Create User");
+		form.AddField("user[username]", user.username);
+		form.AddField("user[level]", "1");
+		UnityWebRequest www = UnityWebRequest.Post(url, form);
+
+		yield return www.Send();
+
+		if(www.isError) {
+			Debug.Log(www.error);
+		}
+		else {
+			Debug.Log("User created!");
+			StartCoroutine(GetJSON_User());
+		}
+	}
 }
