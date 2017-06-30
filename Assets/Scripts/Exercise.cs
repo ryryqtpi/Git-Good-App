@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using SimpleJSON;
 
-public class Exercise
+public class Exercise : MonoBehaviour
 {
+	
 	public string exercise_name;
 	public string discription;
 	public string difficulty_level;
@@ -22,8 +23,6 @@ public class Exercise
 
 		for(int s=0; s<count; s++){
 			var stepJSON = exerciseJSON["steps"][s];
-//			GameObject go = new GameObject ();
-//			Step step = go.AddComponent<Step> ();
 			Step step = new Step();
 			step.populate (stepJSON);
 			steps[s] = step;

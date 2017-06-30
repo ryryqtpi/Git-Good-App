@@ -23,8 +23,6 @@ public class Step {
 
 		for(int c=0; c<count; c++){
 			var commandJSON = stepJSON["commands"][c];
-//			GameObject go = new GameObject ();
-//			Command command = go.AddComponent<Command> ();
 			Command command = new Command();
 			command.populate (commandJSON);
 			this.commands[c] = command;

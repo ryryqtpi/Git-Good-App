@@ -39,13 +39,11 @@ public class APIInterface : MonoBehaviour {
 			Exercise[] exercises = new Exercise[count];
 
 			for (int e=0; e<count; e++) {
-				GameObject go = new GameObject ();
+				GameObject go = new GameObject ("Exercise: "+json[e]["name"]);
 				Exercise exercise = go.AddComponent<Exercise> ();
 				exercise.populate (json [e]);
 				exercises[e] = exercise;
 			}
-
-			Debug.Log ("Exercise "+exercises [0].exercise_name+" Steps count: "+exercises [0].steps.Length);
 
         }
 

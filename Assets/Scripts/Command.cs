@@ -6,11 +6,11 @@ using SimpleJSON;
 public class Command {
 
 	public string command_name;
-//	public string argument;
+	public string argument;
 
 	public void populate (JSONNode commandJSON){
 		this.command_name = commandJSON["name"];
-//		this.argument = commandJSON["argument"];
+		this.argument = commandJSON["argument"];
 	}
 
 	// Use this for initialization
