@@ -1,14 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SimpleJSON;
 
-public class Command : MonoBehaviour {
+public class Command {
 
-	public string commandText;
+	public string command_name;
+	public string argument;
 
-	public Command(string rawCommandText)
-	{
-		commandText = rawCommandText.Trim ();
+	public void populate (JSONNode commandJSON){
+		this.command_name = commandJSON["name"];
+		this.argument = commandJSON["argument"];
 	}
 
 	// Use this for initialization
@@ -22,24 +24,4 @@ public class Command : MonoBehaviour {
 	{
 		
 	}
-
-	public void Run()
-	{
-		Debug.Log ("Running command \"" + commandText + "\"");
-	}
-
-	public string Output(string consoleText, int lineCount)
-	{
-		Debug.Log ("Printing command \"" + commandText + "\"");
-		string prefix = "\n";
-
-		if (consoleText == "") 
-		{
-			prefix = "";
-		} 
-
-		return prefix + "Git-Good:~ cashc$ " + commandText;
-	}
-
-
 }

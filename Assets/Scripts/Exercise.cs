@@ -2,42 +2,42 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using SimpleJSON;
 
 public class Exercise : MonoBehaviour
 {
-
-	public string name;
+	
+	public string exercise_name;
 	public string discription;
-	public string skills;
+	public string difficulty_level;
+	public bool completed = false;
+	public Step[] steps;
 
-	public List<string> steps;
+	public void populate(JSONNode exerciseJSON){
+		this.exercise_name = exerciseJSON["name"];
+		this.discription = exerciseJSON["description"];
+		this.difficulty_level = exerciseJSON["difficulty"];
 
-	public Text nameText;
-	public Text discriptionText;
-	public Text skillsText;
+		int count = exerciseJSON ["steps"].Count;
+		this.steps = new Step [count];
 
+		for(int s=0; s<count; s++){
+			var stepJSON = exerciseJSON["steps"][s];
+			Step step = new Step();
+			step.populate (stepJSON);
+			steps[s] = step;
+		}
+	}
 
 	// Use this for initialization
 	void Start ()
 	{
-		nameText.text = name;
-		discriptionText.text = discription;
-		skillsText.text = skills;
+		
 	}
 
 	// Update is called once per frame
 	void Update ()
 	{
 
-	}
-
-	public void AddStep(string step)
-	{
-		steps.Add (step);
-
-		/*foreach (string text in steps)
-		{
-			Debug.Log (text);
-		}*/
 	}
 }
