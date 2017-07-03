@@ -37,7 +37,7 @@ public class ExerciseManager : MonoBehaviour {
 
 	public void PrintExercises()
 	{
-		cm.PrintToConsole ("\nExercises: ");
+		cm.PrintToConsole ("\n<b>Exercises</b>");
 		for (int e = 0; e < exercises.Length; e++) {
 			cm.PrintToConsole ("\n" + (e + 1) + ". " + exercises [e].exercise_name);
 		}
