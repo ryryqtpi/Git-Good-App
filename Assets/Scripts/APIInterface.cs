@@ -12,6 +12,7 @@ public class APIInterface : MonoBehaviour {
 	const string BASE_URL = "https://super-confusing-baby.herokuapp.com/";
 
 	User user;
+	public ExerciseManager em;
 
 	void Start () {
 		
@@ -22,7 +23,7 @@ public class APIInterface : MonoBehaviour {
 		
 	}
 
-	public void GetExercises(int user_level=1){
+	public void UpdateAndPrintExercises(int user_level=1){
 		string exercise_url = BASE_URL+"exercises.json?difficulty="+user_level;
 		StartCoroutine(GetJSON_Exercises(exercise_url));
 	}
@@ -69,9 +70,13 @@ public class APIInterface : MonoBehaviour {
 			for (int e=0; e<count; e++) {
 				GameObject go = new GameObject ("Exercise: "+json[e]["name"]);
 				Exercise exercise = go.AddComponent<Exercise> ();
+				go.transform.SetParent (em.gameObject.transform);
 				exercise.populate (json [e]);
 				exercises[e] = exercise;
 			}
+
+			em.SaveExerciseList (exercises);
+			em.PrintExercises ();
         }
     }
 

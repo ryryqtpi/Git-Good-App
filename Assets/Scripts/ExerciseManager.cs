@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class ExerciseManager : MonoBehaviour {
 
-	public GameObject exercisePrefab;
+	public Exercise[] exercises;
+	public ConsoleManager cm;
+	public APIInterface api;
 
 	// Use this for initialization
 	void Start ()
@@ -28,16 +30,16 @@ public class ExerciseManager : MonoBehaviour {
 		Debug.Log ("Ending exercise: " + exercise_name);
 	}
 
-	public void GenerateSampleExercise()
+	public void SaveExerciseList(Exercise[] exercises)
 	{
-		/*
-		GameObject go = Instantiate (exercisePrefab, transform);
-		Exercise exercise = go.GetComponent<Exercise> ();
+		this.exercises = exercises;
+	}
 
-		// Creating an exercise
-		exercise.name = "Exercise #1";
-		exercise.discription = "A breief tutorial on how to use the <b>[cd]</b> and <b>[ls]</b> commands in the terminal.";
-		exercise.skills = "<b>[cd]</b> and <b>[ls]</b>";
-		*/
+	public void PrintExercises()
+	{
+		cm.PrintToConsole ("\nExercises: ");
+		for (int e = 0; e < exercises.Length; e++) {
+			cm.PrintToConsole ("\n" + (e + 1) + ". " + exercises [e].exercise_name);
+		}
 	}
 }

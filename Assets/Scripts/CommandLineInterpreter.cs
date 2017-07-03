@@ -7,6 +7,9 @@ using UnityEngine.SceneManagement;
 public class CommandLineInterpreter : MonoBehaviour {
 
 	private ConsoleManager cm;
+	public APIInterface api;
+	public ExerciseManager em;
+
 	public string loginSceneName;
 
 	// Use this for initialization
@@ -38,10 +41,17 @@ public class CommandLineInterpreter : MonoBehaviour {
 			SceneManager.LoadScene (loginSceneName, LoadSceneMode.Single);
 		}
 
+		// Command Name: Exercises
+		// Discription: Prints a list of available exercises
+		else if (command == "exercises") 
+		{
+			api.UpdateAndPrintExercises ();
+		}
+
 		// If a valid command is not found, return an error message
 		else 
 		{
-			cm.PrintToConsole ("\n<color=#ff0000ff>ERROR: command not recognized</color>\n");
+			cm.PrintToConsole ("\n<color=#ff0000ff>ERROR: command not recognized</color>");
 		}
 	}
 }
