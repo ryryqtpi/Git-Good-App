@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 using SimpleJSON;
+using UnityEngine.SceneManagement;
 
 public class LoginManager : MonoBehaviour
 {
@@ -13,13 +14,20 @@ public class LoginManager : MonoBehaviour
 	public InputField commandLine;
 	public ConsoleManager cm;
 	public GameObject profilePicture;
-	public GameObject gitHubUserPrefab;
+	public GameObject UserPrefab;
+	public APIInterface api = new APIInterface ();
 
 	int state = 0;
 
 	// Use this for initialization
 	void Start () 
 	{
+		api = GameObject.FindGameObjectWithTag ("API").GetComponent<APIInterface>();
+
+		GameObject go = Instantiate (UserPrefab);
+		user = go.AddComponent<User>();
+		DontDestroyOnLoad (go);
+
 		string message = "Welcome to Git-Good! Please sign in to your GitHub account to continue.\n\nUsername: ";
 		cm.PrintToConsole (message);
 	}
@@ -43,7 +51,8 @@ public class LoginManager : MonoBehaviour
 				SubmitToken ();
 				break;
 			case 2:
-				cm.PrintToConsole (user.StringRepresentation());
+//				cm.PrintToConsole (user.StringRepresentation());
+				SceneManager.LoadScene("Exercise");
 				break;
 			}
 		}
@@ -104,9 +113,6 @@ public class LoginManager : MonoBehaviour
 		}
 		else
 		{
-			GameObject go = Instantiate (gitHubUserPrefab);
-			user = go.AddComponent<User>();
-
 			var json = JSON.Parse (www.downloadHandler.text);
 
 			if (json["total_private_repos"].IsNull)
@@ -126,18 +132,11 @@ public class LoginManager : MonoBehaviour
 				//display image as a UI texture
 				Texture2D texture = new Texture2D(1, 1);
 				www_image.LoadImageIntoTexture(texture);
-				//Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.one / 2);
-				//GetComponent<SpriteRenderer>().sprite = sprite;
-
 				profilePicture.GetComponent<RawImage> ().texture = texture;
-				//profilePicture.GetComponent<RawImage> ().SetNativeSize ();
-				//ResizeImage();
 
 				cm.PrintToConsole("\nSuccess!\n");
 				state = 2;
 
-				GameObject api_go = new GameObject ("API");
-				APIInterface api = api_go.AddComponent<APIInterface> ();
 				api.GetUser (ref user);
 			}
 		}
