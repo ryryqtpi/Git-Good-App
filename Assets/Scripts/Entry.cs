@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Entry : MonoBehaviour {
+public class Entry {
 
 	public string entryText;
 

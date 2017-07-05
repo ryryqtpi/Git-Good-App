@@ -12,9 +12,10 @@ public class LoginManager : MonoBehaviour
 	public User user;
 
 	public InputField commandLine;
-	public ConsoleManager cm;
 	public GameObject profilePicture;
 	public GameObject UserPrefab;
+
+	public ConsoleManager cm;
 	public APIInterface api;
 
 	int state = 0;
@@ -23,7 +24,9 @@ public class LoginManager : MonoBehaviour
 	void Start () 
 	{
 		api = GameObject.FindGameObjectWithTag ("API").GetComponent<APIInterface>();
+		cm = GameObject.FindGameObjectWithTag ("ConsoleManager").GetComponent<ConsoleManager> ();
 
+		// Create an empty user
 		GameObject go = Instantiate (UserPrefab);
 		user = go.AddComponent<User>();
 		DontDestroyOnLoad (go);

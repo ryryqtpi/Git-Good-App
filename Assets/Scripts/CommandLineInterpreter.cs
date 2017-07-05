@@ -18,6 +18,7 @@ public class CommandLineInterpreter : MonoBehaviour {
 		// Do something
 		cm = gameObject.GetComponent<ConsoleManager>();
 		api = GameObject.FindGameObjectWithTag ("API").GetComponent<APIInterface>();
+		em = GameObject.FindGameObjectWithTag ("ExerciseManager").GetComponent<ExerciseManager>();
 	}
 	
 	// Update is called once per frame
