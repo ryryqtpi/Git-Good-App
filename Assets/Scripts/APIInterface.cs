@@ -15,7 +15,7 @@ public class APIInterface : MonoBehaviour {
 	public ExerciseManager em;
 
 	void Start () {
-		
+		em = GameObject.FindGameObjectWithTag ("ExerciseManager").GetComponent<ExerciseManager> ();
 	}
 
 	void Update ()
@@ -23,9 +23,9 @@ public class APIInterface : MonoBehaviour {
 		
 	}
 
-	public void UpdateExercises(int user_level=1){
-		string exercise_url = BASE_URL+"exercises.json?difficulty="+user_level;
-		StartCoroutine(GetJSON_Exercises(exercise_url));
+	public void UpdateExercises(bool verbose=false){
+		string exercise_url = BASE_URL+"exercises.json?difficulty=1";
+		StartCoroutine(GetJSON_Exercises(exercise_url, verbose));
 	}
 
 	public void GetUser(ref User new_user){
@@ -52,7 +52,7 @@ public class APIInterface : MonoBehaviour {
 		}
 	}
 
-    IEnumerator GetJSON_Exercises(string url)
+    IEnumerator GetJSON_Exercises(string url, bool verbose)
     {
         UnityWebRequest www = UnityWebRequest.Get(url);
         yield return www.Send();
@@ -75,8 +75,11 @@ public class APIInterface : MonoBehaviour {
 				exercises[e] = exercise;
 			}
 
-			em.SaveExerciseList (exercises);
-			em.PrintExercises ();
+			em.SaveExercises (exercises);
+			if (verbose) 
+			{
+				em.PrintExercises ();
+			}
         }
     }
 

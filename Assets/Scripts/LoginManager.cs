@@ -15,7 +15,7 @@ public class LoginManager : MonoBehaviour
 	public ConsoleManager cm;
 	public GameObject profilePicture;
 	public GameObject UserPrefab;
-	public APIInterface api = new APIInterface ();
+	public APIInterface api;
 
 	int state = 0;
 
@@ -51,7 +51,7 @@ public class LoginManager : MonoBehaviour
 				SubmitToken ();
 				break;
 			case 2:
-//				cm.PrintToConsole (user.StringRepresentation());
+				api.UpdateExercises ();
 				SceneManager.LoadScene("Exercise");
 				break;
 			}

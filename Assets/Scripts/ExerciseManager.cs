@@ -11,13 +11,13 @@ public class ExerciseManager : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
 	{
-
+		
 	}
 
 	// Update is called once per frame
 	void Update ()
 	{
-
+		
 	}
 
 	public void StartExercise(string exercise_name)
@@ -30,7 +30,7 @@ public class ExerciseManager : MonoBehaviour {
 		Debug.Log ("Ending exercise: " + exercise_name);
 	}
 
-	public void SaveExerciseList(Exercise[] exercises)
+	public void SaveExercises(Exercise[] exercises)
 	{
 		this.exercises = exercises;
 	}

@@ -17,6 +17,7 @@ public class CommandLineInterpreter : MonoBehaviour {
 	{
 		// Do something
 		cm = gameObject.GetComponent<ConsoleManager>();
+		api = GameObject.FindGameObjectWithTag ("API").GetComponent<APIInterface>();
 	}
 	
 	// Update is called once per frame
@@ -45,7 +46,7 @@ public class CommandLineInterpreter : MonoBehaviour {
 		// Discription: Prints a list of available exercises
 		else if (command == "exercises") 
 		{
-			api.UpdateExercises ();
+			api.UpdateExercises (true);
 		}
 
 		// If a valid command is not found, return an error message
