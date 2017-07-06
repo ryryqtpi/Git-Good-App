@@ -13,6 +13,7 @@ public class ExerciseManager : MonoBehaviour {
 	{
 		cm = GameObject.FindGameObjectWithTag ("ConsoleManager").GetComponent<ConsoleManager> ();
 		api = GameObject.FindGameObjectWithTag ("API").GetComponent<APIInterface> ();
+		api.UpdateExercises();
 	}
 
 	// Update is called once per frame
@@ -31,13 +32,11 @@ public class ExerciseManager : MonoBehaviour {
 		Debug.Log ("Ending exercise: " + exercise_name);
 	}
 
-	public void SaveExercises(Exercise[] exercises)
-	{
-		this.exercises = exercises;
-	}
-
 	public void PrintExercises()
 	{
+		exercises = GetComponentsInChildren<Exercise> ();
+//		Debug.Log (exercises[0].exercise_name);
+
 		cm.PrintToConsole ("\n<b>Exercises</b>");
 		for (int e = 0; e < exercises.Length; e++) {
 			cm.PrintToConsole ("\n" + (e + 1) + ". " + exercises [e].exercise_name);

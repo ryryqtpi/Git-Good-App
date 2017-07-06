@@ -47,7 +47,7 @@ public class CommandLineInterpreter : MonoBehaviour {
 		// Discription: Prints a list of available exercises
 		else if (command == "exercises") 
 		{
-			api.UpdateExercises (true);
+			em.PrintExercises ();
 		}
 
 		// If a valid command is not found, return an error message

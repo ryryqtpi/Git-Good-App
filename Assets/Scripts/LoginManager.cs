@@ -54,7 +54,6 @@ public class LoginManager : MonoBehaviour
 				SubmitToken ();
 				break;
 			case 2:
-				api.UpdateExercises ();
 				SceneManager.LoadScene("Exercise");
 				break;
 			}

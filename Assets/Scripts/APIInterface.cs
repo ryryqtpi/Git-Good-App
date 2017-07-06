@@ -16,6 +16,7 @@ public class APIInterface : MonoBehaviour {
 
 	void Start () {
 		em = GameObject.FindGameObjectWithTag ("ExerciseManager").GetComponent<ExerciseManager> ();
+		DontDestroyOnLoad (em);
 	}
 
 	void Update ()
@@ -23,9 +24,9 @@ public class APIInterface : MonoBehaviour {
 		
 	}
 
-	public void UpdateExercises(bool verbose=false){
+	public void UpdateExercises(){
 		string exercise_url = BASE_URL+"exercises.json?difficulty=1";
-		StartCoroutine(GetJSON_Exercises(exercise_url, verbose));
+		StartCoroutine(GetJSON_Exercises(exercise_url));
 	}
 
 	public void GetUser(ref User new_user){
@@ -52,7 +53,7 @@ public class APIInterface : MonoBehaviour {
 		}
 	}
 
-    IEnumerator GetJSON_Exercises(string url, bool verbose)
+    IEnumerator GetJSON_Exercises(string url)
     {
         UnityWebRequest www = UnityWebRequest.Get(url);
         yield return www.Send();
@@ -71,15 +72,11 @@ public class APIInterface : MonoBehaviour {
 				GameObject go = new GameObject ("Exercise: "+json[e]["name"]);
 				Exercise exercise = go.AddComponent<Exercise> ();
 				go.transform.SetParent (em.gameObject.transform);
+
 				exercise.populate (json [e]);
 				exercises[e] = exercise;
 			}
-
-			em.SaveExercises (exercises);
-			if (verbose) 
-			{
-				em.PrintExercises ();
-			}
+			Debug.Log ("Got "+exercises.Length+" exercises");
         }
     }
 
