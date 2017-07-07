@@ -38,4 +38,10 @@ public class Step {
 	void Update () {
 		
 	}
+
+	public override string ToString(){
+		string ret = instruction;
+		ret += "\n";
+		return ret;
+	}
 }

@@ -1,10 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 using SimpleJSON;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class LoginManager : MonoBehaviour
 {
@@ -21,7 +23,8 @@ public class LoginManager : MonoBehaviour
 	public APIInterface api;
 
 	int state = 0;
-	int postLoginState = 0;
+	int exercise_started = 0;
+	int step = 0;
 
 	// Use this for initialization
 	void Start () 
@@ -59,22 +62,43 @@ public class LoginManager : MonoBehaviour
 				SubmitToken ();
 				break;
 			case 2: //successfully logged in
-				SubmitMenuChoice();
+				if (exercise_started > 0) {
+					em.StartStep (exercise_started, step);
+					step++;
+				} else {
+					SubmitMenuChoice();	
+				}
 				break;
 			}
 		}
 	}
 
 	public void SubmitMenuChoice(){
-		if (commandLine.text == "exercises") 
-		{
+		
+		if (commandLine.text == "exercise") {
+			cm.ClearConsole ();
+			int last_id = em.exercises.Length - 1;
+			cm.PrintToConsole(em.ExerciseString (last_id));
+			cm.PrintToConsole ("Starting Exercise " + last_id + "...\n");
+		} else if (commandLine.text == "exercises") {
+			cm.ClearConsole ();
 			cm.PrintToConsole ("\n<b>Exercises</b>\n");
-			em.PrintExercises ();
-		} 
-		else if (commandLine.text == "profile") 
-		{
+			cm.PrintToConsole (em.ExercisesString ());
+		} else if (commandLine.text == "profile") {
+			cm.ClearConsole ();
 			cm.PrintToConsole ("\n<b>Profile</b>\n");
-			cm.PrintToConsole (user.ToString());
+			cm.PrintToConsole (user.ToString ());
+		} else if (commandLine.text == "clear") {
+			cm.ClearConsole ();
+		} else {
+			int id_int;
+			bool parsed = Int32.TryParse(commandLine.text, out id_int);
+			if (parsed) {
+				cm.PrintToConsole(em.ExerciseString (id_int));
+				exercise_started = id_int;
+			} else {
+				cm.PrintToConsole ("\n<color=#ff0000ff>ERROR: command not recognized</color>\n");
+			}
 		}
 	}
 

@@ -32,7 +32,7 @@ public class Exercise : MonoBehaviour
 	public override string ToString(){
 		string ret = exercise_name;
 		ret += "\n    Level: " + level;
-		ret += "\n    Description: " + description;
+		ret += "\n    Description: " + description + "\n";
 		return ret;
 	}
 
