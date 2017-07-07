@@ -25,7 +25,7 @@ public class APIInterface : MonoBehaviour {
 	}
 
 	public void UpdateExercises(){
-		string exercise_url = BASE_URL+"exercises.json?difficulty=1";
+		string exercise_url = BASE_URL+"exercises.json?difficulty="+user.level;
 		StartCoroutine(GetJSON_Exercises(exercise_url));
 	}
 
@@ -49,6 +49,7 @@ public class APIInterface : MonoBehaviour {
 			} else {
 				Debug.Log ("Got user from API.");
 				user.populateAPI (json);
+				UpdateExercises ();
 			}
 		}
 	}
@@ -71,12 +72,14 @@ public class APIInterface : MonoBehaviour {
 			for (int e=0; e<count; e++) {
 				GameObject go = new GameObject ("Exercise: "+json[e]["name"]);
 				Exercise exercise = go.AddComponent<Exercise> ();
-				go.transform.SetParent (em.gameObject.transform);
+//				DontDestroyOnLoad (go);
+//				go.transform.SetParent (em.gameObject.transform);
 
 				exercise.populate (json [e]);
 				exercises[e] = exercise;
 			}
 			Debug.Log ("Got "+exercises.Length+" exercises");
+			em.SaveExercises (exercises);
         }
     }
 

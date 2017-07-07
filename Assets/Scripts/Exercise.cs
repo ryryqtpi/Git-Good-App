@@ -8,15 +8,15 @@ public class Exercise : MonoBehaviour
 {
 	
 	public string exercise_name;
-	public string discription;
-	public string difficulty_level;
+	public string description;
+	public string level;
 	public bool completed = false;
 	public Step[] steps;
 
 	public void populate(JSONNode exerciseJSON){
 		this.exercise_name = exerciseJSON["name"];
-		this.discription = exerciseJSON["description"];
-		this.difficulty_level = exerciseJSON["difficulty"];
+		this.description = exerciseJSON["description"];
+		this.level = exerciseJSON["level"];
 
 		int count = exerciseJSON ["steps"].Count;
 		this.steps = new Step [count];
@@ -27,6 +27,13 @@ public class Exercise : MonoBehaviour
 			step.populate (stepJSON);
 			steps[s] = step;
 		}
+	}
+
+	public override string ToString(){
+		string ret = exercise_name;
+		ret += "\n    Level: " + level;
+		ret += "\n    Description: " + description;
+		return ret;
 	}
 
 	// Use this for initialization

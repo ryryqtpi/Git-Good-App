@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
@@ -16,15 +17,18 @@ public class LoginManager : MonoBehaviour
 	public GameObject UserPrefab;
 
 	public ConsoleManager cm;
+	public ExerciseManager em;
 	public APIInterface api;
 
 	int state = 0;
+	int postLoginState = 0;
 
 	// Use this for initialization
 	void Start () 
 	{
 		api = GameObject.FindGameObjectWithTag ("API").GetComponent<APIInterface>();
 		cm = GameObject.FindGameObjectWithTag ("ConsoleManager").GetComponent<ConsoleManager> ();
+		em = GameObject.FindGameObjectWithTag ("ExerciseManager").GetComponent<ExerciseManager> ();
 
 		// Create an empty user
 		GameObject go = Instantiate (UserPrefab);
@@ -44,19 +48,33 @@ public class LoginManager : MonoBehaviour
 	{
 		if (Input.GetButtonDown ("Submit")) 
 		{
-			switch (state) {
-			case 0:
+			switch (state) 
+			{
+			case 0: //prompting for username
 				Debug.Log ("Username entered");
 				SubmitUsername ();
 				break;
-			case 1:
+			case 1: //prompting for token
 				Debug.Log ("Token entered");
 				SubmitToken ();
 				break;
-			case 2:
-				SceneManager.LoadScene("Exercise");
+			case 2: //successfully logged in
+				SubmitMenuChoice();
 				break;
 			}
+		}
+	}
+
+	public void SubmitMenuChoice(){
+		if (commandLine.text == "exercises") 
+		{
+			cm.PrintToConsole ("\n<b>Exercises</b>\n");
+			em.PrintExercises ();
+		} 
+		else if (commandLine.text == "profile") 
+		{
+			cm.PrintToConsole ("\n<b>Profile</b>\n");
+			cm.PrintToConsole (user.ToString());
 		}
 	}
 
