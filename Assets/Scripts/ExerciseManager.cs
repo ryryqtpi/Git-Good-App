@@ -27,9 +27,10 @@ public class ExerciseManager : MonoBehaviour {
 		return exercises [exercises.Length].ToString();
 	}
 
-	public void StartExercise(string exercise_name)
+	public void StartExercise(int id)
 	{
-		Debug.Log ("Starting exercise: " + exercise_name);
+		cm.PrintToConsole(exercises[id].ToString());
+		cm.PrintToConsole ("Press enter to start exercise " + (id+1) + "...\n");
 	}
 
 	public void EndExercise(string exercise_name)
@@ -58,9 +59,32 @@ public class ExerciseManager : MonoBehaviour {
 		}
 	}
 
-	public void StartStep(int exercise_id, int step_id){
-		Step step = exercises [exercise_id].steps [step_id];
-		cm.PrintToConsole (step.ToString ());
+	public void RunExercise(ref int exercise_started, ref int step_id, string input){
+		Step step;
 
+		if (step_id < 0) {
+			step_id++;
+			step = exercises [exercise_started].steps [step_id];
+			cm.PrintToConsole (step.BoldString());
+			return;
+		} else {
+			step = exercises [exercise_started].steps [step_id];
+		}
+
+		if (step.answer == input) {
+			cm.PrintToConsole (step.correct_response+"\n");
+			step_id++;
+			if (step_id >= exercises [exercise_started].steps.Length) {
+				cm.PrintToConsole ("Completed Exercise " + exercise_started + ": " + exercises [exercise_started].exercise_name + "!\n");
+				step_id = -1;
+				exercise_started = -1;
+			} else {
+				step = exercises [exercise_started].steps [step_id];
+				cm.PrintToConsole (step.BoldString());
+			}
+		} else {
+			cm.PrintToConsole (step.error_response+"\n");
+		}
 	}
+
 }

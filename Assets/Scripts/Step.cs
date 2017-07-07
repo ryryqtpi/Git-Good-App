@@ -44,4 +44,8 @@ public class Step {
 		ret += "\n";
 		return ret;
 	}
+
+	public string BoldString(){
+		return "<b>" + ToString() + "</b>";
+	}
 }

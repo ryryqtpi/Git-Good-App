@@ -47,10 +47,10 @@ public class ConsoleManager : MonoBehaviour {
 			// Trim command before sending it
 			string trimmed_command = commandLine.text.Trim ();
 
-			if (trimmed_command == "")
-			{
-				return;
-			}
+//			if (trimmed_command == "")
+//			{
+//				return;
+//			}
 
 			Entry entry = new Entry (trimmed_command);
 

@@ -23,8 +23,8 @@ public class LoginManager : MonoBehaviour
 	public APIInterface api;
 
 	int state = 0;
-	int exercise_started = 0;
-	int step = 0;
+	int exercise_started = -1;
+	int step = -1;
 
 	// Use this for initialization
 	void Start () 
@@ -62,11 +62,10 @@ public class LoginManager : MonoBehaviour
 				SubmitToken ();
 				break;
 			case 2: //successfully logged in
-				if (exercise_started > 0) {
-					em.StartStep (exercise_started, step);
-					step++;
+				if (exercise_started >= 0) {
+					em.RunExercise (ref exercise_started, ref step, commandLine.text);
 				} else {
-					SubmitMenuChoice();	
+					SubmitMenuChoice();
 				}
 				break;
 			}
@@ -78,8 +77,8 @@ public class LoginManager : MonoBehaviour
 		if (commandLine.text == "exercise") {
 			cm.ClearConsole ();
 			int last_id = em.exercises.Length - 1;
-			cm.PrintToConsole(em.ExerciseString (last_id));
-			cm.PrintToConsole ("Starting Exercise " + last_id + "...\n");
+			em.StartExercise (last_id);
+			exercise_started = last_id;
 		} else if (commandLine.text == "exercises") {
 			cm.ClearConsole ();
 			cm.PrintToConsole ("\n<b>Exercises</b>\n");
@@ -94,7 +93,9 @@ public class LoginManager : MonoBehaviour
 			int id_int;
 			bool parsed = Int32.TryParse(commandLine.text, out id_int);
 			if (parsed) {
-				cm.PrintToConsole(em.ExerciseString (id_int));
+				id_int--;
+				cm.ClearConsole ();
+				em.StartExercise (id_int);
 				exercise_started = id_int;
 			} else {
 				cm.PrintToConsole ("\n<color=#ff0000ff>ERROR: command not recognized</color>\n");
