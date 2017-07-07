@@ -18,6 +18,7 @@ public class ConsoleManager : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
 	{
+		DontDestroyOnLoad (gameObject);
 		cli = gameObject.GetComponent<CommandLineInterpreter> ();
 		commandLine.text = "";
 	}
@@ -46,12 +47,12 @@ public class ConsoleManager : MonoBehaviour {
 			// Trim command before sending it
 			string trimmed_command = commandLine.text.Trim ();
 
-			if (trimmed_command == "")
-			{
-				return;
-			}
+//			if (trimmed_command == "")
+//			{
+//				return;
+//			}
 
-			Entry entry = new Entry (commandLine.text.Trim ());
+			Entry entry = new Entry (trimmed_command);
 
 			PrintToConsole (entry.Output(displayTextBox.text, lineCount));
 			cli.HandleCommand(trimmed_command);

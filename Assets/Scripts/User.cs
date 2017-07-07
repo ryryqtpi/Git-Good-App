@@ -6,7 +6,7 @@ using SimpleJSON;
 public class User : MonoBehaviour {
 	
 	public string id;
-	public string level;
+	public int level;
 	public string api_created_at;
 	public string api_updated_at;
 	public string username;
@@ -57,7 +57,7 @@ public class User : MonoBehaviour {
 
 	public void populateAPI(JSONNode json){
 		this.id = json ["id"];
-		this.level = json ["level"];
+		this.level = (int)json ["level"];
 		this.api_updated_at = json ["created_at"];
 		this.api_created_at = json ["updated_at"];
 
@@ -66,14 +66,27 @@ public class User : MonoBehaviour {
 	public override string ToString(){
 		string ret = "username: " + username;
 		ret += "\nid: " + id;
+//		ret += "\ngithub_id: " + github_id;
 		ret += "\nlevel: " + level;
-		return ret;
-	}
-
-	public string StringRepresentation(){
-		string ret = "username: " + username;
-		ret += "\nid: " + id;
-		ret += "\nlevel: " + level;
+		ret += "\nname: " + full_name;
+		ret += "\ncompany: " + company;
+		ret += "\nblog: " + blog;
+		ret += "\nlocation: " + location;
+		ret += "\nemail: " + email;
+		ret += "\nbio: " + bio;
+		ret += "\npublic repositories: " + public_repos;
+//		ret += "\npublic gists: " + public_gists;
+		ret += "\nfollowers: " + followers;
+		ret += "\nfollowing: " + following;
+		ret += "\ngithub created: " + created_at;
+		ret += "\ngit-good created: " + api_created_at;
+		ret += "\ngithub updated: " + updated_at;
+		ret += "\ngit-good updated: " + api_updated_at;
+//		ret += "\ntotal private repos: " + total_private_repos;
+//		ret += "\nowner private repos: " + owned_private_repos;
+//		ret += "\ncollaborators: " + collaborators;
+//		ret += "\ntwo factor authentication: " + two_factor_authentication;
+		ret += "\n";
 		return ret;
 	}
 

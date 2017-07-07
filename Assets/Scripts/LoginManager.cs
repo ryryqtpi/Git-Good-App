@@ -1,8 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 using SimpleJSON;
+using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class LoginManager : MonoBehaviour
 {
@@ -11,15 +15,29 @@ public class LoginManager : MonoBehaviour
 	public User user;
 
 	public InputField commandLine;
-	public ConsoleManager cm;
 	public GameObject profilePicture;
-	public GameObject gitHubUserPrefab;
+	public GameObject UserPrefab;
+
+	public ConsoleManager cm;
+	public ExerciseManager em;
+	public APIInterface api;
 
 	int state = 0;
+	int exercise_started = -1;
+	int step = -1;
 
 	// Use this for initialization
 	void Start () 
 	{
+		api = GameObject.FindGameObjectWithTag ("API").GetComponent<APIInterface>();
+		cm = GameObject.FindGameObjectWithTag ("ConsoleManager").GetComponent<ConsoleManager> ();
+		em = GameObject.FindGameObjectWithTag ("ExerciseManager").GetComponent<ExerciseManager> ();
+
+		// Create an empty user
+		GameObject go = Instantiate (UserPrefab);
+		user = go.AddComponent<User>();
+		DontDestroyOnLoad (go);
+
 		string message = "Welcome to Git-Good! Please sign in to your GitHub account to continue.\n\nUsername: ";
 		cm.PrintToConsole (message);
 	}
@@ -33,18 +51,54 @@ public class LoginManager : MonoBehaviour
 	{
 		if (Input.GetButtonDown ("Submit")) 
 		{
-			switch (state) {
-			case 0:
+			switch (state) 
+			{
+			case 0: //prompting for username
 				Debug.Log ("Username entered");
 				SubmitUsername ();
 				break;
-			case 1:
+			case 1: //prompting for token
 				Debug.Log ("Token entered");
 				SubmitToken ();
 				break;
-			case 2:
-				cm.PrintToConsole (user.StringRepresentation());
+			case 2: //successfully logged in
+				if (exercise_started >= 0) {
+					em.RunExercise (ref exercise_started, ref step, commandLine.text);
+				} else {
+					SubmitMenuChoice();
+				}
 				break;
+			}
+		}
+	}
+
+	public void SubmitMenuChoice(){
+		
+		if (commandLine.text == "exercise") {
+			cm.ClearConsole ();
+			int last_id = em.exercises.Length - 1;
+			em.StartExercise (last_id);
+			exercise_started = last_id;
+		} else if (commandLine.text == "exercises") {
+			cm.ClearConsole ();
+			cm.PrintToConsole ("\n<b>Exercises</b>\n");
+			cm.PrintToConsole (em.ExercisesString ());
+		} else if (commandLine.text == "profile") {
+			cm.ClearConsole ();
+			cm.PrintToConsole ("\n<b>Profile</b>\n");
+			cm.PrintToConsole (user.ToString ());
+		} else if (commandLine.text == "clear") {
+			cm.ClearConsole ();
+		} else {
+			int id_int;
+			bool parsed = Int32.TryParse(commandLine.text, out id_int);
+			if (parsed) {
+				id_int--;
+				cm.ClearConsole ();
+				em.StartExercise (id_int);
+				exercise_started = id_int;
+			} else {
+				cm.PrintToConsole ("\n<color=#ff0000ff>ERROR: command not recognized</color>\n");
 			}
 		}
 	}
@@ -104,9 +158,6 @@ public class LoginManager : MonoBehaviour
 		}
 		else
 		{
-			GameObject go = Instantiate (gitHubUserPrefab);
-			user = go.AddComponent<User>();
-
 			var json = JSON.Parse (www.downloadHandler.text);
 
 			if (json["total_private_repos"].IsNull)
@@ -126,18 +177,11 @@ public class LoginManager : MonoBehaviour
 				//display image as a UI texture
 				Texture2D texture = new Texture2D(1, 1);
 				www_image.LoadImageIntoTexture(texture);
-				//Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.one / 2);
-				//GetComponent<SpriteRenderer>().sprite = sprite;
-
 				profilePicture.GetComponent<RawImage> ().texture = texture;
-				//profilePicture.GetComponent<RawImage> ().SetNativeSize ();
-				//ResizeImage();
 
 				cm.PrintToConsole("\nSuccess!\n");
 				state = 2;
 
-				GameObject api_go = new GameObject ("API");
-				APIInterface api = api_go.AddComponent<APIInterface> ();
 				api.GetUser (ref user);
 			}
 		}
