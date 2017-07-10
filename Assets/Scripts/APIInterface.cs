@@ -25,7 +25,7 @@ public class APIInterface : MonoBehaviour {
 	}
 
 	public void UpdateExercises(){
-		string exercise_url = BASE_URL+"exercises.json?difficulty="+user.level;
+		string exercise_url = BASE_URL+"exercises.json?level="+user.level;
 		StartCoroutine(GetJSON_Exercises(exercise_url));
 	}
 

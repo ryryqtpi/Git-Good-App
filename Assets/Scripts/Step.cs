@@ -48,4 +48,14 @@ public class Step {
 	public string BoldString(){
 		return "<b>" + ToString() + "</b>";
 	}
+
+	public string CommandsString(){
+		string ret = "";
+		for (int i = 0; i < commands.Length; i++) {
+			ret += "<b>" + commands [i].command_name + "</b> " + commands [i].argument;
+			ret += "            ";
+		}
+		return ret;
+	}
+
 }

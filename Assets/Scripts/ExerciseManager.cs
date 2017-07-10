@@ -66,16 +66,19 @@ public class ExerciseManager : MonoBehaviour {
 			step_id++;
 			step = exercises [exercise_started].steps [step_id];
 			cm.PrintToConsole (step.BoldString());
+			cm.SetIntructionsText (step.CommandsString());
 			return;
 		} else {
 			step = exercises [exercise_started].steps [step_id];
 		}
 
+		cm.SetIntructionsText (step.CommandsString());
+
 		if (step.answer == input) {
 			cm.PrintToConsole (step.correct_response+"\n");
 			step_id++;
 			if (step_id >= exercises [exercise_started].steps.Length) {
-				cm.PrintToConsole ("Completed Exercise " + exercise_started + ": " + exercises [exercise_started].exercise_name + "!\n");
+				cm.PrintToConsole ("Completed Exercise " + (exercise_started+1) + ": " + exercises [exercise_started].exercise_name + "!\n");
 				step_id = -1;
 				exercise_started = -1;
 			} else {
