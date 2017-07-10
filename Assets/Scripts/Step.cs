@@ -53,7 +53,7 @@ public class Step {
 		string ret = "";
 		for (int i = 0; i < commands.Length; i++) {
 			ret += "<b>" + commands [i].command_name + "</b> " + commands [i].argument;
-			ret += "            ";
+			ret += "          ";
 		}
 		return ret;
 	}

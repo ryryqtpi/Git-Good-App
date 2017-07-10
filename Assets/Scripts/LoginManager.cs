@@ -26,7 +26,6 @@ public class LoginManager : MonoBehaviour
 	int exercise_started = -1;
 	int step = -1;
 
-	// Use this for initialization
 	void Start () 
 	{
 		api = GameObject.FindGameObjectWithTag ("API").GetComponent<APIInterface>();
@@ -37,8 +36,8 @@ public class LoginManager : MonoBehaviour
 		GameObject go = Instantiate (UserPrefab);
 		user = go.AddComponent<User>();
 		DontDestroyOnLoad (go);
-
-		string message = "Welcome to Git-Good! Please sign in to your GitHub account to continue.\n\nUsername: ";
+		cm.SetIntructionsText ("Type your GitHub username, then press enter.");
+		string message = "Username: ";
 		cm.PrintToConsole (message);
 	}
 
@@ -142,6 +141,7 @@ public class LoginManager : MonoBehaviour
 				cm.PrintToConsole ("\nError: " + json ["message"] + ". Please try again.\nUsername:");
 			} else {
 				cm.PrintToConsole (username+"\nAccess Token: ");
+				cm.SetIntructionsText ("Type your GitHub Access Token, then press enter.");
 				state = 1;
 			}
 		}
@@ -180,6 +180,13 @@ public class LoginManager : MonoBehaviour
 				profilePicture.GetComponent<RawImage> ().texture = texture;
 
 				cm.PrintToConsole("\nSuccess!\n");
+				string instructions = "<b>exercises</b>          <b>exercise</b>          <b>profile</b>          ";
+				if (user.level == 1) {
+					instructions += "<b>" + user.level + "</b>";
+				} else {
+					instructions += "<b><1-"+user.level+"></b>";
+				}
+				cm.SetIntructionsText (instructions);
 				state = 2;
 
 				api.GetUser (ref user);

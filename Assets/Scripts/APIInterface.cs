@@ -8,7 +8,7 @@ using SimpleJSON;
 
 public class APIInterface : MonoBehaviour {
 
-//	const string BASE_URL = "http://localhost:5000/";
+//	const string BASE_URL = "http://localhost:3000/";
 	const string BASE_URL = "https://super-confusing-baby.herokuapp.com/";
 
 	User user;
@@ -16,7 +16,6 @@ public class APIInterface : MonoBehaviour {
 
 	void Start () {
 		em = GameObject.FindGameObjectWithTag ("ExerciseManager").GetComponent<ExerciseManager> ();
-		DontDestroyOnLoad (em);
 	}
 
 	void Update ()
@@ -72,9 +71,6 @@ public class APIInterface : MonoBehaviour {
 			for (int e=0; e<count; e++) {
 				GameObject go = new GameObject ("Exercise: "+json[e]["name"]);
 				Exercise exercise = go.AddComponent<Exercise> ();
-//				DontDestroyOnLoad (go);
-//				go.transform.SetParent (em.gameObject.transform);
-
 				exercise.populate (json [e]);
 				exercises[e] = exercise;
 			}
@@ -99,6 +95,23 @@ public class APIInterface : MonoBehaviour {
 		else {
 			Debug.Log("User created!");
 			StartCoroutine(GetJSON_User());
+		}
+	}
+
+	public IEnumerator PostIncrementUserLevel(){
+		user.level++;
+		string url = BASE_URL + "users/" + user.id+"?level=" + user.level;
+		byte[] myData = System.Text.Encoding.UTF8.GetBytes("level=" + user.level);
+		UnityWebRequest www = UnityWebRequest.Put(url, myData);
+
+		yield return www.Send();
+
+		if(www.isError) {
+			Debug.Log(www.error);
+		}
+		else {
+			Debug.Log("User updated to level "+user.level);
+			UpdateExercises ();
 		}
 	}
 }
