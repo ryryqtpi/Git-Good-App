@@ -34,6 +34,16 @@ public class ConsoleManager : MonoBehaviour {
 		instructionsTextBox.text = instructions;
 	}
 
+	public void ResetInstructionsText(int id){
+		string instructions = "<b>exercises</b>          <b>exercise</b>          <b>profile</b>          ";
+		if (id == 1) {
+			instructions += "<b>" + id + "</b>";
+		} else {
+			instructions += "<b><1-"+id+"></b>";
+		}
+		instructionsTextBox.text = instructions;
+	}
+
 	public bool UserPressedEnter()
 	{
 		return Input.GetButtonDown ("Submit");

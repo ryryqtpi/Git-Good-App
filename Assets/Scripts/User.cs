@@ -5,7 +5,7 @@ using SimpleJSON;
 
 public class User : MonoBehaviour {
 	
-	public string id;
+	public int id;
 	public int level;
 	public string api_created_at;
 	public string api_updated_at;
@@ -56,7 +56,7 @@ public class User : MonoBehaviour {
 	}
 
 	public void populateAPI(JSONNode json){
-		this.id = json ["id"];
+		this.id = (int)json ["id"];
 		this.level = (int)json ["level"];
 		this.api_updated_at = json ["created_at"];
 		this.api_created_at = json ["updated_at"];

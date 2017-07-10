@@ -11,11 +11,13 @@ public class APIInterface : MonoBehaviour {
 //	const string BASE_URL = "http://localhost:3000/";
 	const string BASE_URL = "https://super-confusing-baby.herokuapp.com/";
 
-	User user;
+	public User user;
 	public ExerciseManager em;
+	public ConsoleManager cm;
 
 	void Start () {
 		em = GameObject.FindGameObjectWithTag ("ExerciseManager").GetComponent<ExerciseManager> ();
+		cm = GameObject.FindGameObjectWithTag ("ConsoleManager").GetComponent<ConsoleManager> ();
 	}
 
 	void Update ()
@@ -48,6 +50,7 @@ public class APIInterface : MonoBehaviour {
 			} else {
 				Debug.Log ("Got user from API.");
 				user.populateAPI (json);
+				cm.ResetInstructionsText (user.level);
 				UpdateExercises ();
 			}
 		}

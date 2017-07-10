@@ -180,17 +180,10 @@ public class Controller : MonoBehaviour
 				profilePicture.GetComponent<RawImage> ().texture = texture;
 
 				cm.PrintToConsole("\nSuccess!\n");
-				string instructions = "<b>exercises</b>          <b>exercise</b>          <b>profile</b>          ";
-				if (user.level == 1) {
-					instructions += "<b>" + user.level + "</b>";
-				} else {
-					instructions += "<b><1-"+user.level+"></b>";
-				}
-				cm.SetIntructionsText (instructions);
 				state = 2;
-
 				api.GetUser (ref user);
 			}
 		}
 	}
+
 }
