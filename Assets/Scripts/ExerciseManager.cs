@@ -80,6 +80,7 @@ public class ExerciseManager : MonoBehaviour {
 				step_id = -1;
 				exercise_started = -1;
 				StartCoroutine (api.PostIncrementUserLevel());
+				cm.ResetInstructionsText (api.user.level);
 			} else {
 				step = exercises [exercise_started].steps [step_id];
 				cm.PrintToConsole (step.BoldString());
