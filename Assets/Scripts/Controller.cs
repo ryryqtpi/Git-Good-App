@@ -21,6 +21,7 @@ public class Controller : MonoBehaviour
 	public ConsoleManager cm;
 	public ExerciseManager em;
 	public APIInterface api;
+	public ExpCalculator exp;
 
 	int state = 0;
 	int exercise_started = -1;
@@ -35,7 +36,12 @@ public class Controller : MonoBehaviour
 		// Create an empty user
 		GameObject go = Instantiate (UserPrefab);
 		user = go.AddComponent<User>();
+		exp = go.AddComponent<ExpCalculator> ();
 		DontDestroyOnLoad (go);
+
+		CanvasGroup profile = GameObject.Find("Profile").GetComponent<CanvasGroup>();
+		profile.alpha = 0;
+
 		cm.SetIntructionsText ("Type your GitHub username, then press enter.");
 		string message = "Username: ";
 		cm.PrintToConsole (message);
@@ -44,6 +50,17 @@ public class Controller : MonoBehaviour
 	void Update ()
 	{
 		
+	}
+
+	void UpdateProfileDisplay()
+	{
+		CanvasGroup profile = GameObject.Find("Profile").GetComponent<CanvasGroup>();
+		profile.alpha = 1;
+
+		Text usernameText = GameObject.Find ("Username").GetComponent<Text> ();
+		usernameText.text = user.username;
+		Text experienceText = GameObject.Find ("Experience").GetComponent<Text> ();
+		experienceText.text = exp.Calculate ().ToString("N0") + " XP";
 	}
 
 	public void RouteInput()
@@ -179,7 +196,10 @@ public class Controller : MonoBehaviour
 				www_image.LoadImageIntoTexture(texture);
 				profilePicture.GetComponent<RawImage> ().texture = texture;
 
+				UpdateProfileDisplay ();
+
 				cm.PrintToConsole("\nSuccess!\n");
+
 				state = 2;
 				api.GetUser (ref user);
 			}

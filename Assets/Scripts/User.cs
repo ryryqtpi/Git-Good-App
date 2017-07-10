@@ -7,6 +7,7 @@ public class User : MonoBehaviour {
 	
 	public int id;
 	public int level;
+	public float exp = 0.0f;
 	public string api_created_at;
 	public string api_updated_at;
 	public string username;
@@ -99,5 +100,4 @@ public class User : MonoBehaviour {
 	void Update () {
 		
 	}
-
 }
