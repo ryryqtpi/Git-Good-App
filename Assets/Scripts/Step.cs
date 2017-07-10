@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using SimpleJSON;
@@ -13,10 +14,16 @@ public class Step {
 
 	public void populate (JSONNode stepJSON)
 	{
-		this.answer = stepJSON["answer"];
+		this.answer = stepJSON ["answer"];
 		this.instruction = stepJSON["instruction"];
+		this.instruction = this.instruction.Replace ("\\n", "\n");
+		this.instruction = this.instruction.Replace ("\\t", "    ");
 		this.correct_response = stepJSON["correct_response"];
+		this.correct_response = this.correct_response.Replace ("\\n", "\n");
+		this.correct_response = this.correct_response.Replace ("\\t", "    ");
 		this.error_response = stepJSON["error_response"];
+		this.error_response = this.error_response.Replace ("\\n", "\n");
+		this.error_response = this.error_response.Replace ("\\t", "    ");
 
 		int count = stepJSON ["commands"].Count;
 		this.commands = new Command[count];

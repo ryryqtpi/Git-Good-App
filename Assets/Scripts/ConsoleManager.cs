@@ -35,7 +35,7 @@ public class ConsoleManager : MonoBehaviour {
 	}
 
 	public void ResetInstructionsText(int id){
-		string instructions = "<b>exercises</b>          <b>exercise</b>          <b>profile</b>          ";
+		string instructions = "<b>exercises</b>          <b>profile</b>          ";
 		if (id == 1) {
 			instructions += "<b>" + id + "</b>";
 		} else {
