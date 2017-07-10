@@ -8,7 +8,7 @@ using SimpleJSON;
 using UnityEngine.SceneManagement;
 using System.Linq;
 
-public class LoginManager : MonoBehaviour
+public class Controller : MonoBehaviour
 {
 	public string username;
 	public string token;
@@ -46,7 +46,7 @@ public class LoginManager : MonoBehaviour
 		
 	}
 
-	public void TryLogin()
+	public void RouteInput()
 	{
 		if (Input.GetButtonDown ("Submit")) 
 		{
