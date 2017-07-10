@@ -23,10 +23,11 @@ public class ExpCalculator : MonoBehaviour {
 		_user = GetComponent<User> ();
 	}
 
-	public void Calculate()
+	public float Calculate()
 	{
 		_experience = (int.Parse(_user.followers) * _followersMultiplier) + (int.Parse(_user.owned_private_repos) * _privateReposMultiplier) + (int.Parse(_user.public_repos) * _publicReposMultiplier) + (int.Parse(_user.public_gists) * _publicGistsMultiplier) + (int.Parse(_user.collaborators) * _collaboratorsMultiplier) + (int.Parse(_user.following) * _followingMultiplier);
 		Debug.Log (_experience);
+		return _experience;
 	}
 
 	public void SetUser(User _newUser)
