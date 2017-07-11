@@ -52,19 +52,21 @@ public class Controller : MonoBehaviour
 		if ((Input.GetKey(KeyCode.RightControl) || Input.GetKey(KeyCode.LeftControl)) && Input.GetKeyDown(KeyCode.Z))
 		{
 			// CTRL + Z
-			if ((state == 2) && (exercise_started != -1)) {
-				cm.ClearConsole ();
-				cm.ResetInstructionsText (api.exercise_limit);
-				exercise_started = -1;
-				step = -1;
-			} else {
-				Debug.Log ("Unable to quit exercise because no exercise has been started.");
-			}
-				
+			QuitCurrentExercise();	
 		}
 	}
 
-
+	void QuitCurrentExercise()
+	{
+		if ((state == 2) && (exercise_started != -1)) {
+			cm.ClearConsole ();
+			cm.ResetInstructionsText (api.exercise_limit);
+			exercise_started = -1;
+			step = -1;
+		} else {
+			Debug.Log ("Unable to quit exercise because no exercise has been started.");
+		}
+	}
 
 	void UpdateProfileDisplay()
 	{
