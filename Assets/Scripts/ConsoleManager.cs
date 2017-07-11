@@ -81,6 +81,7 @@ public class ConsoleManager : MonoBehaviour {
 	{
 		// Clear the console text box
 		displayTextBox.text = "";
+		ForceUpdateConsoleUI ();
 	}
 
 	public void PrintToConsole(string message)

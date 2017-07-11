@@ -50,7 +50,6 @@ public class APIInterface : MonoBehaviour {
 			} else {
 				Debug.Log ("Got user from API.");
 				user.populateAPI (json);
-				cm.ResetInstructionsText (user.level);
 				UpdateExercises ();
 			}
 		}
@@ -79,6 +78,15 @@ public class APIInterface : MonoBehaviour {
 			}
 			Debug.Log ("Got "+exercises.Length+" exercises");
 			em.SaveExercises (exercises);
+
+			int exercise_limit = 0;
+
+			if (user.level < exercises.Length) {
+				exercise_limit = user.level;
+			} else {
+				exercise_limit = exercises.Length;
+			}
+			cm.ResetInstructionsText (exercise_limit);
         }
     }
 

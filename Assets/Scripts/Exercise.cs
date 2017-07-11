@@ -6,7 +6,7 @@ using SimpleJSON;
 
 public class Exercise : MonoBehaviour
 {
-	
+	public int id;
 	public string exercise_name;
 	public string description;
 	public string level;
@@ -14,6 +14,7 @@ public class Exercise : MonoBehaviour
 	public Step[] steps;
 
 	public void populate(JSONNode exerciseJSON){
+		this.id = (int)exerciseJSON["name"];
 		this.exercise_name = exerciseJSON["name"];
 		this.description = exerciseJSON["description"];
 		this.level = exerciseJSON["level"];
