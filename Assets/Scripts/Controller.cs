@@ -49,8 +49,22 @@ public class Controller : MonoBehaviour
 
 	void Update ()
 	{
-		
+		if ((Input.GetKey(KeyCode.RightControl) || Input.GetKey(KeyCode.LeftControl)) && Input.GetKeyDown(KeyCode.Z))
+		{
+			// CTRL + Z
+			if ((state == 2) && (exercise_started != -1)) {
+				cm.ClearConsole ();
+				cm.ResetInstructionsText (api.exercise_limit);
+				exercise_started = -1;
+				step = -1;
+			} else {
+				Debug.Log ("Unable to quit exercise because no exercise has been started.");
+			}
+				
+		}
 	}
+
+
 
 	void UpdateProfileDisplay()
 	{
@@ -121,23 +135,28 @@ public class Controller : MonoBehaviour
 
 	public void SubmitUsername()
 	{
+		
 		if (commandLine.text != "") 
 		{
 			username = commandLine.text;
 			string url = "https://api.github.com/users/" + username;
 			StartCoroutine(CheckGitHubUserExists(url));
+			cm.ClearCommandLine ();
 		}
 	}
 
 	public void SubmitToken()
 	{
+
 		if (commandLine.text != "") 
 		{
 			token = commandLine.text;
 			cm.PrintToConsole ("*****************");
 			string url = "https://api.github.com/users/" + username + "?access_token=" + token;
 			StartCoroutine(GetGitHubUser(url));
+			cm.ClearCommandLine ();
 		}
+
 	}
 
 	public void ResizeImage()
