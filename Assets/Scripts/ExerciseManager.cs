@@ -14,7 +14,7 @@ public class ExerciseManager : MonoBehaviour {
 	void Start ()
 	{
 		cm = GameObject.FindGameObjectWithTag ("ConsoleManager").GetComponent<ConsoleManager> ();
-		api = GameObject.FindGameObjectWithTag ("API").GetComponent<APIInterface>();
+		api = GameObject.FindGameObjectWithTag ("API").GetComponent<APIInterface>(); 
 	}
 
 	// Update is called once per frame
