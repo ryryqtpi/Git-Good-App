@@ -66,7 +66,7 @@ public class ExerciseManager : MonoBehaviour {
 		{
 			step_id++;
 			step = exercises [exercise_started].steps [step_id];
-			cm.PrintToConsole (step.BoldString());
+			cm.PrintToConsole (step.ToString());
 			cm.SetIntructionsText (step.CommandsString());
 			return;
 		} 
@@ -101,7 +101,7 @@ public class ExerciseManager : MonoBehaviour {
 			else 
 			{
 				step = exercises [exercise_started].steps [step_id];
-				cm.PrintToConsole (step.BoldString());
+				cm.PrintToConsole (step.ToString());
 				cm.SetIntructionsText (step.CommandsString());
 			}
 		} 
