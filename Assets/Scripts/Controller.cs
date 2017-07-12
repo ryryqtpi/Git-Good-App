@@ -35,8 +35,11 @@ public class Controller : MonoBehaviour
 
 		// Create an empty user
 		GameObject go = Instantiate (UserPrefab);
+
+		// User & ExpCalculator require each other
 		user = go.AddComponent<User>();
 		exp = go.AddComponent<ExpCalculator> ();
+
 		DontDestroyOnLoad (go);
 
 		CanvasGroup profile = GameObject.Find("Profile").GetComponent<CanvasGroup>();

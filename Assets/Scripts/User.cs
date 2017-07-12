@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using SimpleJSON;
+using UnityEngine;
+using UnityEngine.UI;
 
+[RequireComponent(typeof(ExpCalculator))]
 public class User : MonoBehaviour {
 	
 	public int id;
@@ -31,6 +33,7 @@ public class User : MonoBehaviour {
 	public string owned_private_repos;
 	public string collaborators;
 	public string two_factor_authentication;
+	public ExpCalculator expCalculator;
 
 	public void populateGitHub(JSONNode json){
 		this.username = json["login"];
@@ -54,6 +57,7 @@ public class User : MonoBehaviour {
 		this.owned_private_repos = json["owned_private_repos"];
 		this.collaborators = json["collaborators"];
 		this.two_factor_authentication = json["two_factor_authentication"];
+		this.expCalculator = gameObject.GetComponent<ExpCalculator> ();
 	}
 
 	public void populateAPI(JSONNode json){
@@ -61,7 +65,9 @@ public class User : MonoBehaviour {
 		this.level = (int)json ["level"];
 		this.api_updated_at = json ["created_at"];
 		this.api_created_at = json ["updated_at"];
-
+		this.exp = expCalculator.Calculate ();
+		Text experienceText = GameObject.Find ("Experience").GetComponent<Text> ();
+		experienceText.text = this.exp.ToString("N0") + " XP";
 	}
 
 	public override string ToString(){
