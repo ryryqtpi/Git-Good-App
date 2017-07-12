@@ -78,8 +78,6 @@ public class Controller : MonoBehaviour
 
 		Text usernameText = GameObject.Find ("Username").GetComponent<Text> ();
 		usernameText.text = user.username;
-		Text experienceText = GameObject.Find ("Experience").GetComponent<Text> ();
-		experienceText.text = exp.Calculate ().ToString("N0") + " XP";
 	}
 
 	public void RouteInput()

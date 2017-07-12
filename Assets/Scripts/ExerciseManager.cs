@@ -62,31 +62,51 @@ public class ExerciseManager : MonoBehaviour {
 	public void RunExercise(ref int exercise_started, ref int step_id, string input){
 		Step step;
 
-		if (step_id < 0) {
+		if (step_id < 0) 
+		{
 			step_id++;
 			step = exercises [exercise_started].steps [step_id];
 			cm.PrintToConsole (step.BoldString());
 			cm.SetIntructionsText (step.CommandsString());
 			return;
-		} else {
+		} 
+		else 
+		{
 			step = exercises [exercise_started].steps [step_id];
 		}
 
-		if (step.answer == input) {
+
+		if (step.answer.Trim() == input.Trim()) 
+		{
 			cm.PrintToConsole (step.correct_response+"\n");
 			step_id++;
-			if (step_id >= exercises [exercise_started].steps.Length) {
+
+			// If we're at the end of an exercises...
+			if (step_id >= exercises [exercise_started].steps.Length) 
+			{
+				if (api.user.level <= int.Parse(exercises [exercise_started].level)) {
+					StartCoroutine (api.PostIncrementUserLevel ());
+					api.user.UpdateExperience ();
+				}
+
+				cm.PrintToConsole ("<size=12><b> /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =\\\n/= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =\\\n||    ______                   _             _____                      _      _       _    ||\n||   |  ____|                 (_)           / ____|                    | |    | |     | |   ||\n||   | |__  __  _____ _ __ ___ _ ___  ___  | |     ___  _ __ ___  _ __ | | ___| |_ ___| |   ||\n||   |  __| \\ \\/ / _ \\ '__/ __| / __|/ _ \\ | |    / _ \\| '_ ` _ \\| '_ \\| |/ _ \\ __/ _ \\ |   ||\n||   | |____ >  <  __/ | | (__| \\__ \\  __/ | |___| (_) | | | | | | |_) | |  __/ ||  __/_|   ||\n||   |______/_/\\_\\___|_|  \\___|_|___/\\___|  \\_____\\___/|_| |_| |_| .__/|_|\\___|\\__\\___(_)   ||\n||                                                               | |                        ||\n||                                                               |_|                        ||\n\\= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =/\n \\= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =/</b></size>\n");
 				cm.PrintToConsole ("Completed Exercise " + (exercise_started+1) + ": " + exercises [exercise_started].exercise_name + "!\n");
 				step_id = -1;
 				exercise_started = -1;
-				StartCoroutine (api.PostIncrementUserLevel());
+
 				cm.ResetInstructionsText (api.user.level);
-			} else {
+			} 
+
+			// Otherwise, load the next step...
+			else 
+			{
 				step = exercises [exercise_started].steps [step_id];
 				cm.PrintToConsole (step.BoldString());
 				cm.SetIntructionsText (step.CommandsString());
 			}
-		} else {
+		} 
+		else 
+		{
 			cm.PrintToConsole (step.error_response+"\n");
 		}
 	}

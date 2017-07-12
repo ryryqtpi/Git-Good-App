@@ -65,6 +65,11 @@ public class User : MonoBehaviour {
 		this.level = (int)json ["level"];
 		this.api_updated_at = json ["created_at"];
 		this.api_created_at = json ["updated_at"];
+		UpdateExperience ();
+	}
+
+	public void UpdateExperience()
+	{
 		this.exp = expCalculator.Calculate ();
 		Text experienceText = GameObject.Find ("Experience").GetComponent<Text> ();
 		experienceText.text = this.exp.ToString("N0") + " XP";
