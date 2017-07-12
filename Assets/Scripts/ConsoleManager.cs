@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class ConsoleManager : MonoBehaviour {
 
-	private CommandLineInterpreter cli;
 	public Canvas mainCanvas;
 	public Text displayTextBox;
 	public Text instructionsTextBox;
@@ -19,7 +18,6 @@ public class ConsoleManager : MonoBehaviour {
 	void Start ()
 	{
 		DontDestroyOnLoad (gameObject);
-		cli = gameObject.GetComponent<CommandLineInterpreter> ();
 		commandLine.text = "";
 	}
 
@@ -49,29 +47,6 @@ public class ConsoleManager : MonoBehaviour {
 		return Input.GetButtonDown ("Submit");
 	}
 
-	// Sends a string to the console
-	public void SendToConsole()
-	{
-		if (UserPressedEnter())
-		{
-			// Trim command before sending it
-			string trimmed_command = commandLine.text.Trim ();
-
-//			if (trimmed_command == "")
-//			{
-//				return;
-//			}
-
-			Entry entry = new Entry (trimmed_command);
-
-			PrintToConsole (entry.Output(displayTextBox.text, lineCount));
-			cli.HandleCommand(trimmed_command);
-
-			// Update the UI after making changes
-			ForceUpdateConsoleUI();
-		}
-	}
-
 	public void ForceUpdateConsoleUI()
 	{
 		scrollRect.verticalScrollbar.value=0f;
@@ -82,6 +57,11 @@ public class ConsoleManager : MonoBehaviour {
 		// Clear the console text box
 		displayTextBox.text = "";
 		ForceUpdateConsoleUI ();
+	}
+
+	public void ClearCommandLine()
+	{
+		commandLine.text = "";	
 	}
 
 	public void PrintToConsole(string message)

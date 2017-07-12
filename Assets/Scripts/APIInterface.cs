@@ -15,6 +15,8 @@ public class APIInterface : MonoBehaviour {
 	public ExerciseManager em;
 	public ConsoleManager cm;
 
+	public int exercise_limit = -1;
+
 	void Start () {
 		em = GameObject.FindGameObjectWithTag ("ExerciseManager").GetComponent<ExerciseManager> ();
 		cm = GameObject.FindGameObjectWithTag ("ConsoleManager").GetComponent<ConsoleManager> ();
@@ -79,7 +81,7 @@ public class APIInterface : MonoBehaviour {
 			Debug.Log ("Got "+exercises.Length+" exercises");
 			em.SaveExercises (exercises);
 
-			int exercise_limit = 0;
+			exercise_limit = 0;
 
 			if (user.level < exercises.Length) {
 				exercise_limit = user.level;
