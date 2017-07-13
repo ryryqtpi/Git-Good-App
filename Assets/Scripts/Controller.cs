@@ -84,6 +84,7 @@ public class Controller : MonoBehaviour
 
 	void QuitCurrentExercise()
 	{
+		cm.PrintToConsole ("^C\n");
 		if ((state == 2) && (exercise_started != -1)) {
 			cm.ClearConsole ();
 			cm.ResetInstructionsText (api.exercise_limit);
