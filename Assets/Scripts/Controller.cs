@@ -54,9 +54,11 @@ public class Controller : MonoBehaviour
 
 	void Update ()
 	{
-		if ((Input.GetKey (KeyCode.RightControl) || Input.GetKey (KeyCode.LeftControl)) && Input.GetKeyDown (KeyCode.Z)) {
+		if ((Input.GetKey (KeyCode.RightControl) || Input.GetKey (KeyCode.LeftControl)) && Input.GetKeyDown (KeyCode.C)) {
 			// CTRL + Z
 			QuitCurrentExercise ();	
+		} else if((Input.GetKey (KeyCode.RightControl) || Input.GetKey (KeyCode.LeftControl)) && Input.GetKeyDown (KeyCode.L)){
+			cm.ClearConsole ();
 		} else if (Input.GetKeyDown (KeyCode.UpArrow)) {
 			HistoryUp ();
 		} else if (Input.GetKeyDown (KeyCode.DownArrow)) {
@@ -155,7 +157,7 @@ public class Controller : MonoBehaviour
 				em.StartExercise (id_int);
 				exercise_started = id_int;
 			} else {
-				cm.PrintToConsole ("\n<color=#ff0000ff>ERROR: command not recognized</color>\n");
+				cm.PrintToConsole ("<color=#ff0000ff>ERROR: command not recognized</color>\n");
 			}
 		}
 	}
