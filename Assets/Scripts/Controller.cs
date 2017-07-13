@@ -25,6 +25,8 @@ public class Controller : MonoBehaviour
 	public APIInterface api;
 	public ExpCalculator exp;
 
+	public string helpPageUrl = "https://github.com/blog/1509-personal-api-tokens";
+
 	int state = 0;
 	int exercise_started = -1;
 	int step = -1;
@@ -210,9 +212,17 @@ public class Controller : MonoBehaviour
 				cm.PrintToConsole ("\nError: " + json ["message"] + ". Please try again.\nUsername:");
 			} else {
 				cm.PrintToConsole (username+"\nAccess Token: ");
-				cm.SetIntructionsText ("Type your GitHub Access Token, then press enter.");
+				cm.SetIntructionsText ("Type your GitHub Access Token, then press enter. Click <b>here</b> for help getting started.");
 				state = 1;
 			}
+		}
+	}
+
+	public void InstructionsTextClicked()
+	{
+		if (this.state == 1) {
+			Webpage helpPage = new Webpage ();
+			helpPage.Open (helpPageUrl);
 		}
 	}
 
