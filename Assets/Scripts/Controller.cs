@@ -17,6 +17,8 @@ public class Controller : MonoBehaviour
 	public InputField commandLine;
 	public GameObject profilePicture;
 	public GameObject UserPrefab;
+	public List<string> inputHistory = new List<string>();
+	public int history_state = 0;
 
 	public ConsoleManager cm;
 	public ExerciseManager em;
@@ -52,10 +54,29 @@ public class Controller : MonoBehaviour
 
 	void Update ()
 	{
-		if ((Input.GetKey(KeyCode.RightControl) || Input.GetKey(KeyCode.LeftControl)) && Input.GetKeyDown(KeyCode.Z))
-		{
+		if ((Input.GetKey (KeyCode.RightControl) || Input.GetKey (KeyCode.LeftControl)) && Input.GetKeyDown (KeyCode.Z)) {
 			// CTRL + Z
-			QuitCurrentExercise();	
+			QuitCurrentExercise ();	
+		} else if (Input.GetKeyDown (KeyCode.UpArrow)) {
+			HistoryUp ();
+		} else if (Input.GetKeyDown (KeyCode.DownArrow)) {
+			HistoryDown ();
+		}
+	}
+
+	void HistoryUp(){
+		if (history_state > 0) {
+			history_state--;
+			cm.SetCommandLine (inputHistory[history_state]);
+		}
+	}
+
+	void HistoryDown(){
+		if (history_state < (inputHistory.Count - 1)) {
+			history_state++;
+			cm.SetCommandLine (inputHistory [history_state]);
+		} else if (history_state == (inputHistory.Count - 1)) {
+			cm.ClearCommandLine ();
 		}
 	}
 
@@ -95,6 +116,7 @@ public class Controller : MonoBehaviour
 				SubmitToken ();
 				break;
 			case 2: //successfully logged in
+				SaveHistory(commandLine.text);
 				if (exercise_started >= 0) {
 					em.RunExercise (ref exercise_started, ref step, commandLine.text);
 				} else {
@@ -106,8 +128,10 @@ public class Controller : MonoBehaviour
 	}
 
 	public void SubmitMenuChoice(){
-		
-		if (commandLine.text == "exercise") {
+
+		if (commandLine.text == "") {
+			cm.PrintToConsole ("$\n");
+		} else if (commandLine.text == "exercise") {
 			cm.ClearConsole ();
 			int last_id = em.exercises.Length - 1;
 			em.StartExercise (last_id);
@@ -134,6 +158,13 @@ public class Controller : MonoBehaviour
 				cm.PrintToConsole ("\n<color=#ff0000ff>ERROR: command not recognized</color>\n");
 			}
 		}
+	}
+
+	public void SaveHistory(string command){
+		if (commandLine.text != "") {
+			inputHistory.Add (command);
+		}
+		history_state = inputHistory.Count;
 	}
 
 	public void SubmitUsername()

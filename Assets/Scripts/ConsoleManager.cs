@@ -56,12 +56,17 @@ public class ConsoleManager : MonoBehaviour {
 	{
 		// Clear the console text box
 		displayTextBox.text = "";
+		ClearCommandLine ();
 		ForceUpdateConsoleUI ();
 	}
 
 	public void ClearCommandLine()
 	{
 		commandLine.text = "";	
+	}
+
+	public void SetCommandLine(string command){
+		commandLine.text = command;
 	}
 
 	public void PrintToConsole(string message)
