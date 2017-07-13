@@ -55,7 +55,6 @@ public class Controller : MonoBehaviour
 	void Update ()
 	{
 		if ((Input.GetKey (KeyCode.RightControl) || Input.GetKey (KeyCode.LeftControl)) && Input.GetKeyDown (KeyCode.C)) {
-			// CTRL + Z
 			QuitCurrentExercise ();	
 		} else if((Input.GetKey (KeyCode.RightControl) || Input.GetKey (KeyCode.LeftControl)) && Input.GetKeyDown (KeyCode.L)){
 			cm.ClearConsole ();
@@ -133,22 +132,18 @@ public class Controller : MonoBehaviour
 	public void SubmitMenuChoice(){
 
 		if (commandLine.text == "") {
-			cm.PrintToConsole ("$\n");
-		} else if (commandLine.text == "exercise") {
-			cm.ClearConsole ();
-			int last_id = em.exercises.Length - 1;
-			em.StartExercise (last_id);
-			exercise_started = last_id;
+			// Do something
+			cm.ScrollToBottom();
 		} else if (commandLine.text == "exercises") {
 			cm.ClearConsole ();
 			cm.PrintToConsole ("\n<b>Exercises</b>\n");
 			cm.PrintToConsole (em.ExercisesString ());
+			cm.ScrollToTop ();
 		} else if (commandLine.text == "profile") {
 			cm.ClearConsole ();
 			cm.PrintToConsole ("\n<b>Profile</b>\n");
 			cm.PrintToConsole (user.ToString ());
-		} else if (commandLine.text == "clear") {
-			cm.ClearConsole ();
+			cm.ScrollToTop ();
 		} else {
 			int id_int;
 			bool parsed = Int32.TryParse(commandLine.text, out id_int);
@@ -156,6 +151,7 @@ public class Controller : MonoBehaviour
 				id_int--;
 				cm.ClearConsole ();
 				em.StartExercise (id_int);
+				cm.ScrollToTop ();
 				exercise_started = id_int;
 			} else {
 				cm.PrintToConsole ("<color=#ff0000ff>ERROR: command not recognized</color>\n");

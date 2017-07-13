@@ -47,9 +47,13 @@ public class ConsoleManager : MonoBehaviour {
 		return Input.GetButtonDown ("Submit");
 	}
 
-	public void ForceUpdateConsoleUI()
+	public void ScrollToTop()
 	{
-		scrollRect.verticalScrollbar.value=0f;
+		scrollRect.normalizedPosition = new Vector2(0, 1);
+	}
+	public void ScrollToBottom()
+	{
+		scrollRect.normalizedPosition = new Vector2(0, 0);
 	}
 
 	public void ClearConsole()
@@ -57,7 +61,7 @@ public class ConsoleManager : MonoBehaviour {
 		// Clear the console text box
 		displayTextBox.text = "";
 		ClearCommandLine ();
-		ForceUpdateConsoleUI ();
+		ScrollToBottom ();
 	}
 
 	public void ClearCommandLine()
@@ -72,10 +76,18 @@ public class ConsoleManager : MonoBehaviour {
 	public void PrintToConsole(string message)
 	{
 		displayTextBox.text += message;
-
-		ForceUpdateConsoleUI();
-
 		commandLine.text = "";
 		lineCount++;
+		ScrollToBottom ();
+	}
+
+	public void PrintUserEntryToConsole(string message, string username)
+	{
+		if (message.Trim () != "") {
+			displayTextBox.text += (username + "$ " + message + "\n");
+			lineCount++;
+		}
+		ClearCommandLine ();
+		ScrollToBottom ();
 	}
 }

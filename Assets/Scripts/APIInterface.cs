@@ -39,6 +39,7 @@ public class APIInterface : MonoBehaviour {
 	}
 
 	IEnumerator GetJSON_User(){
+		cm.SetIntructionsText ("<b>Accessing user data...</b>");
 		string url = BASE_URL + "users.json?username=" + user.username;
 		UnityWebRequest www = UnityWebRequest.Get(url);
 		yield return www.Send();
@@ -56,6 +57,8 @@ public class APIInterface : MonoBehaviour {
 			}
 		}
 	}
+
+
 
     IEnumerator GetJSON_Exercises(string url)
     {
