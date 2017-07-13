@@ -25,6 +25,8 @@ public class Controller : MonoBehaviour
 	public APIInterface api;
 	public ExpCalculator exp;
 
+	public string helpPageUrl = "https://github.com/blog/1509-personal-api-tokens";
+
 	int state = 0;
 	int exercise_started = -1;
 	int step = -1;
@@ -220,7 +222,7 @@ public class Controller : MonoBehaviour
 	{
 		if (this.state == 1) {
 			Webpage helpPage = new Webpage ();
-			helpPage.Open ("https://github.com/blog/1509-personal-api-tokens");
+			helpPage.Open (helpPageUrl);
 		}
 	}
 
