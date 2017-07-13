@@ -9,6 +9,7 @@ public class ConsoleManager : MonoBehaviour {
 	public Text displayTextBox;
 	public Text instructionsTextBox;
 	public InputField commandLine;
+	public Text dollar_sign;
 	public ScrollRect scrollRect;
 	public int lineCount = 0;
 

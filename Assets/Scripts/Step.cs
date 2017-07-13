@@ -46,9 +46,10 @@ public class Step {
 		
 	}
 
-	public override string ToString(){
-		string ret = instruction;
-		ret += "\n";
+	public string PrintInstructions(){
+		string ret = "<color=#62FF89>"+ instruction+"</color>\n";
+//		string ret = "<color=#00000000>"+instruction+"</color>\n";
+//		string ret = instruction + "\n";
 		return ret;
 	}
 
