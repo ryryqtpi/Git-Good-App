@@ -210,9 +210,17 @@ public class Controller : MonoBehaviour
 				cm.PrintToConsole ("\nError: " + json ["message"] + ". Please try again.\nUsername:");
 			} else {
 				cm.PrintToConsole (username+"\nAccess Token: ");
-				cm.SetIntructionsText ("Type your GitHub Access Token, then press enter.");
+				cm.SetIntructionsText ("Type your GitHub Access Token, then press enter. Click <b>here</b> for help getting started.");
 				state = 1;
 			}
+		}
+	}
+
+	public void InstructionsTextClicked()
+	{
+		if (this.state == 1) {
+			Webpage helpPage = new Webpage ();
+			helpPage.Open ("https://github.com/blog/1509-personal-api-tokens");
 		}
 	}
 

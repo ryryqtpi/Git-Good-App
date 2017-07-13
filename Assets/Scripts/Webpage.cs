@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Webpage : MonoBehaviour {
+public class Webpage {
 
 	public string _url = "";
 
@@ -16,8 +16,9 @@ public class Webpage : MonoBehaviour {
 		
 	}
 
-	public void Open ()
+	public void Open (string url)
 	{
+		_url = url;
 		Debug.Log ("Opening webpage... " + _url);
 		Application.OpenURL(_url);
 	}
