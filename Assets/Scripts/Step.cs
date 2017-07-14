@@ -47,9 +47,7 @@ public class Step {
 	}
 
 	public string PrintInstructions(){
-		string ret = "<color=#62FF89>"+ instruction+"</color>\n";
-//		string ret = "<color=#00000000>"+instruction+"</color>\n";
-//		string ret = instruction + "\n";
+		string ret = "<color=#DBFCD7>"+ instruction+"</color>\n";
 		return ret;
 	}
 
