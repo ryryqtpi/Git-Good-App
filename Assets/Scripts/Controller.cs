@@ -230,7 +230,7 @@ public class Controller : MonoBehaviour
 		yield return www.Send();
 
 		if (www.isError) {
-			Debug.Log (www.error);
+			api.ConnectionError (www.error);
 		} else {
 			var json = JSON.Parse (www.downloadHandler.text);
 
@@ -259,7 +259,7 @@ public class Controller : MonoBehaviour
 
 		if (www.isError)
 		{
-			Debug.Log(www.error);
+			api.ConnectionError (www.error);
 		}
 		else
 		{

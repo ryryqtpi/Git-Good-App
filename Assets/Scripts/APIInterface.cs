@@ -44,7 +44,7 @@ public class APIInterface : MonoBehaviour {
 		UnityWebRequest www = UnityWebRequest.Get(url);
 		yield return www.Send();
 		if (www.isError) {
-			Debug.Log (www.error);
+			ConnectionError (www.error);
 		} else {
 			var json = JSON.Parse (www.downloadHandler.text);
 			if (json ["Error"] != null) {
@@ -58,15 +58,13 @@ public class APIInterface : MonoBehaviour {
 		}
 	}
 
-
-
     IEnumerator GetJSON_Exercises(string url)
     {
         UnityWebRequest www = UnityWebRequest.Get(url);
         yield return www.Send();
         if (www.isError)
         {
-            Debug.Log(www.error);
+			ConnectionError (www.error);
         }
         else
         {
@@ -106,7 +104,7 @@ public class APIInterface : MonoBehaviour {
 		yield return www.Send();
 
 		if(www.isError) {
-			Debug.Log(www.error);
+			ConnectionError (www.error);
 		}
 		else {
 			Debug.Log("User created!");
@@ -123,11 +121,16 @@ public class APIInterface : MonoBehaviour {
 		yield return www.Send();
 
 		if(www.isError) {
-			Debug.Log(www.error);
+			ConnectionError (www.error);
 		}
 		else {
 			Debug.Log("User updated to level "+user.level);
 			UpdateExercises ();
 		}
+	}
+
+	public void ConnectionError(string error){
+		Debug.Log(error);
+		cm.PrintToConsole("\nUnable to connect to API. Check internet Connection.\nUsername: ");
 	}
 }
