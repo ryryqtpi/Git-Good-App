@@ -28,9 +28,9 @@ public class Controller : MonoBehaviour
 
 	public string helpPageUrl = "https://github.com/blog/1509-personal-api-tokens";
 
-	int state;
-	int exercise_started = -1;
-	int step = -1;
+	public int state;
+	public int exercise_started = -1;
+	public int step = -1;
 
 	void Start () 
 	{
@@ -69,6 +69,28 @@ public class Controller : MonoBehaviour
 			HistoryUp ();
 		} else if (Input.GetKeyDown (KeyCode.DownArrow)) {
 			HistoryDown ();
+		}
+
+		Text quitText = GameObject.Find ("Quit - Text").GetComponent<Text> ();
+
+		switch (state) 
+		{
+		case 0: //prompting for username
+			quitText.text = "<b>Reprompt</b>";
+			break;
+		case 1: //prompting for token
+			quitText.text = "<b>Reprompt</b>";
+			break;
+		case 2: //successfully logged in
+			if (exercise_started > -1) {
+				quitText.text = "<b>Stop Exercise</b>";
+			} else {
+				quitText.text = "<b>Exit</b>";
+			}
+			break;
+		case 3: //quitting
+			quitText.text = "<b>Exit</b>";
+			break;
 		}
 	}
 
@@ -149,7 +171,7 @@ public class Controller : MonoBehaviour
 					Application.Quit ();
 				} else {
 					cm.PrintToConsole ("Quit aborted.\n");
-					cm.ResetInstructionsText (user.id);
+					cm.ResetInstructionsText (api.exercise_limit);
 					state = 2;
 				}
 				break;

@@ -97,7 +97,7 @@ public class ExerciseManager : MonoBehaviour {
 				step_id = -1;
 				exercise_started = -1;
 
-				cm.ResetInstructionsText (api.user.level);
+				cm.ResetInstructionsText (api.exercise_limit);
 			} 
 
 			// Otherwise, load the next step...
