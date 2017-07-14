@@ -90,7 +90,7 @@ public class Controller : MonoBehaviour
 
 	void LoginPrompt(){
 		cm.ClearConsole ();
-		cm.SetIntructionsText ("Type your GitHub username, then press <i>enter</i>.");
+		cm.SetIntructionsText ("Type your GitHub username, then press <b>Enter</b>.");
 		string message = "Username: ";
 		cm.PrintToConsole (message);
 		state = 0;
@@ -238,7 +238,7 @@ public class Controller : MonoBehaviour
 				cm.PrintToConsole ("\nError: " + json ["message"] + ". Please try again.\nUsername:");
 			} else {
 				cm.PrintToConsole (username+"\nAccess Token: ");
-				cm.SetIntructionsText ("Type your GitHub Access Token, then press <i>enter</i>. Click <b>here</b> for help getting started.");
+				cm.SetIntructionsText ("Type your GitHub Access Token, then press <b>Enter</b>. Click <b>here</b> for help getting started.");
 				state = 1;
 			}
 		}
