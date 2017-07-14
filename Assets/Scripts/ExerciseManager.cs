@@ -30,7 +30,7 @@ public class ExerciseManager : MonoBehaviour {
 	public void StartExercise(int id)
 	{
 		cm.PrintToConsole(exercises[id].ToString());
-		cm.SetIntructionsText ("Press <b>enter<b> to start exercise " + (id+1) + ": "+exercises[id].exercise_name+"...");
+		cm.SetIntructionsText ("Press <b>enter</b> to start exercise " + (id+1) + ": "+exercises[id].exercise_name+"...");
 	}
 
 	public void EndExercise(string exercise_name)
