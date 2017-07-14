@@ -17,6 +17,7 @@ public class Controller : MonoBehaviour
 	public InputField commandLine;
 	public GameObject profilePicture;
 	public GameObject UserPrefab;
+
 	public List<string> inputHistory = new List<string>();
 	public int history_state = 0;
 
@@ -27,7 +28,7 @@ public class Controller : MonoBehaviour
 
 	public string helpPageUrl = "https://github.com/blog/1509-personal-api-tokens";
 
-	int state = 0;
+	int state;
 	int exercise_started = -1;
 	int step = -1;
 
@@ -48,16 +49,20 @@ public class Controller : MonoBehaviour
 
 		CanvasGroup profile = GameObject.Find("Profile").GetComponent<CanvasGroup>();
 		profile.alpha = 0;
-
-		cm.SetIntructionsText ("Type your GitHub username, then press enter.");
-		string message = "Username: ";
-		cm.PrintToConsole (message);
+		LoginPrompt ();
 	}
 
 	void Update ()
 	{
 		if ((Input.GetKey (KeyCode.RightControl) || Input.GetKey (KeyCode.LeftControl)) && Input.GetKeyDown (KeyCode.C)) {
-			QuitCurrentExercise ();	
+			bool quit_exercise = QuitCurrentExercise ();
+			if (!quit_exercise && state == 2) {
+				cm.PrintToConsole("Are you sure you want to exit Git-Good? Type <b>yes</b>, <b>no</b> or <b>logout</b>.\n");
+				cm.SetIntructionsText ("<b>yes</b>          <b>no</b>          <b>logout</b>");
+				state = 3;
+			} else if (!quit_exercise) {
+				LoginPrompt ();
+			}
 		} else if((Input.GetKey (KeyCode.RightControl) || Input.GetKey (KeyCode.LeftControl)) && Input.GetKeyDown (KeyCode.L)){
 			cm.ClearConsole ();
 		} else if (Input.GetKeyDown (KeyCode.UpArrow)) {
@@ -83,7 +88,15 @@ public class Controller : MonoBehaviour
 		}
 	}
 
-	void QuitCurrentExercise()
+	void LoginPrompt(){
+		cm.ClearConsole ();
+		cm.SetIntructionsText ("Type your GitHub username, then press <i>enter</i>.");
+		string message = "Username: ";
+		cm.PrintToConsole (message);
+		state = 0;
+	}
+
+	bool QuitCurrentExercise()
 	{
 		cm.PrintToConsole ("^C\n");
 		if ((state == 2) && (exercise_started != -1)) {
@@ -91,18 +104,18 @@ public class Controller : MonoBehaviour
 			cm.ResetInstructionsText (api.exercise_limit);
 			exercise_started = -1;
 			step = -1;
-		} else {
-			Debug.Log ("Unable to quit exercise because no exercise has been started.");
-		}
+			return true;
+		} 
+		return false;
 	}
 
-	void UpdateProfileDisplay()
+	void UpdateProfileDisplay(bool on = true)
 	{
 		CanvasGroup profile = GameObject.Find("Profile").GetComponent<CanvasGroup>();
-		profile.alpha = 1;
+		profile.alpha = (on) ? 1 : 0;
 
 		Text usernameText = GameObject.Find ("Username").GetComponent<Text> ();
-		usernameText.text = user.username;
+		usernameText.text = (on) ? user.username : "--- XP";
 	}
 
 	public void RouteInput()
@@ -125,6 +138,19 @@ public class Controller : MonoBehaviour
 					em.RunExercise (ref exercise_started, ref step, commandLine.text);
 				} else {
 					SubmitMenuChoice();
+				}
+				break;
+			case 3: //quitting
+				if (commandLine.text == "logout") {
+					UpdateProfileDisplay (false);
+					LoginPrompt ();
+				} else if (commandLine.text == "yes") {
+					cm.PrintToConsole ("Good-Bye from Git-Good.\n");
+					Application.Quit ();
+				} else {
+					cm.PrintToConsole ("Quit aborted.\n");
+					cm.ResetInstructionsText (user.id);
+					state = 2;
 				}
 				break;
 			}
@@ -212,7 +238,7 @@ public class Controller : MonoBehaviour
 				cm.PrintToConsole ("\nError: " + json ["message"] + ". Please try again.\nUsername:");
 			} else {
 				cm.PrintToConsole (username+"\nAccess Token: ");
-				cm.SetIntructionsText ("Type your GitHub Access Token, then press enter. Click <b>here</b> for help getting started.");
+				cm.SetIntructionsText ("Type your GitHub Access Token, then press <i>enter</i>. Click <b>here</b> for help getting started.");
 				state = 1;
 			}
 		}

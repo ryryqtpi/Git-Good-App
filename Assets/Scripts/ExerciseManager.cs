@@ -30,7 +30,7 @@ public class ExerciseManager : MonoBehaviour {
 	public void StartExercise(int id)
 	{
 		cm.PrintToConsole(exercises[id].ToString());
-		cm.SetIntructionsText ("Press enter to start exercise " + (id+1) + "...");
+		cm.SetIntructionsText ("Press <b>enter<b> to start exercise " + (id+1) + ": "+exercises[id].exercise_name+"...");
 	}
 
 	public void EndExercise(string exercise_name)
@@ -93,7 +93,7 @@ public class ExerciseManager : MonoBehaviour {
 
 				cm.PrintToConsole ("<size=12><b> /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =\\\n/= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =\\\n||    ______                   _             _____                      _      _       _    ||\n||   |  ____|                 (_)           / ____|                    | |    | |     | |   ||\n||   | |__  __  _____ _ __ ___ _ ___  ___  | |     ___  _ __ ___  _ __ | | ___| |_ ___| |   ||\n||   |  __| \\ \\/ / _ \\ '__/ __| / __|/ _ \\ | |    / _ \\| '_ ` _ \\| '_ \\| |/ _ \\ __/ _ \\ |   ||\n||   | |____ >  <  __/ | | (__| \\__ \\  __/ | |___| (_) | | | | | | |_) | |  __/ ||  __/_|   ||\n||   |______/_/\\_\\___|_|  \\___|_|___/\\___|  \\_____\\___/|_| |_| |_| .__/|_|\\___|\\__\\___(_)   ||\n||                                                               | |                        ||\n||                                                               |_|                        ||\n\\= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =/\n \\= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =/</b></size>\n");
 				cm.PrintToConsole ("Completed Exercise " + (exercise_started+1) + ": " + exercises [exercise_started].exercise_name + "!\n");
-				cm.ScrollToBottom ();
+				Canvas.ForceUpdateCanvases ();
 				step_id = -1;
 				exercise_started = -1;
 
